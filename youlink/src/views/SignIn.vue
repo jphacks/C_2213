@@ -8,8 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { googleSignIn } from '../stores/auth'
-
+import { signIn, googleSignIn, user_email, user_password } from '../stores/auth'
 
 
 </script>

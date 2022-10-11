@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
+import { logOut, getUser } from '../src/stores/auth'
+
 </script>
 
 <template>
@@ -21,6 +24,8 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/post">Post</RouterLink>
         <RouterLink to="/users">Users</RouterLink>
       </nav>
+      <h2 @click="logOut">LogOut</h2>
+      <h2 @click="getUser">getUser</h2>
     </div>
   </header>
 

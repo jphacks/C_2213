@@ -13,4 +13,4 @@ const config = {
 }
 export const app = initializeApp(config)
 export const auth = getAuth(app);
-export const getFBDB = getFirestore(app)
+export const db = getFirestore(app)
