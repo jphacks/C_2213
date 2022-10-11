@@ -8,12 +8,13 @@ import MessagesView from '../views/Messages.vue'
 import NotificationView from '../views/Notification.vue'
 import PostView from '../views/Post.vue'
 import UsersView from '../views/Users.vue'
+import DirectMessageView from '../views/DirectMessage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/top',
       name: 'top',
       component: TopView
     },
@@ -28,7 +29,7 @@ const router = createRouter({
       component: SignInView
     },
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: HomeView
     },
@@ -38,7 +39,7 @@ const router = createRouter({
       component: OffersView
     },
     {
-      path: '/message',
+      path: '/messages',
       name: 'message',
       component: MessagesView
     },
@@ -56,6 +57,11 @@ const router = createRouter({
       path: '/users',
       name: 'users',
       component: UsersView
+    },
+    {
+      path: '/directmessage',
+      name: 'directmessage',
+      component: DirectMessageView
     },
   ]
 })
