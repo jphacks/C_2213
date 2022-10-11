@@ -13,7 +13,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/top',
       name: 'top',
       component: TopView
     },
@@ -28,7 +28,7 @@ const router = createRouter({
       component: SignInView
     },
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: HomeView
     },
@@ -38,7 +38,7 @@ const router = createRouter({
       component: OffersView
     },
     {
-      path: '/message',
+      path: '/messages',
       name: 'message',
       component: MessagesView
     },
