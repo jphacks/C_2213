@@ -20,8 +20,7 @@ YOULINKで募集させていただきました。</p>
   </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
+<script>
 import HomeModal from '../components/HomeModal.vue'
 import { ref, onMounted } from 'vue'
 import { collection, getDocs } from 'firebase/firestore'
