@@ -2,33 +2,34 @@
     <div>
         <input type="text" v-model="user_email">
         <input type="text" v-model="user_password">
-        <button @click="signIn">登録</button>
+        <p>{{error_message}}</p>
+        <button @click="userSignIn(user_email, user_password)">サインイン</button>
         <button @click="googleSignIn">google登録</button>
     </div>
 </template>
 
 <script setup lang="ts">
-import { googleSignIn } from '../stores/auth'
-import { auth } from '../FirebaseConfig'
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { googleSignIn, signIn } from '../stores/auth'
+import { ref } from 'vue'
 
-let user_email : string = "aaa@aa.aa.aa"
-let user_password : string = "aaaaaa"
+let user_email = ref('')
+let user_password = ref('')
+let error_message = ref('')
 
-const signIn = async () => {
-    console.log(`email : ${user_email}`)
-    console.log(`password : ${user_password}`)
-    createUserWithEmailAndPassword(auth, user_email, user_password)
-    .then((userCredential) => {
-        console.log("signin")
-        const user = userCredential.user;
-    })
-    .catch((error) => {
-        console.log(error)
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-    })
+const userSignIn = async (user_email: string, user_password: string) => {
+    console.log(user_email)
+    console.log(user_password)
+    if (!user_email) {
+        error_message = 'メールアドレスを入力してください'
+        return
+    }
+        
+    if (!user_password) {
+        error_message = 'パスワードを入力してください'
+        return
+    }
+     
+    signIn(user_email, user_password)
 }
 
 </script>
