@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { googleSignIn } from '../stores/auth'
+import { googleSignIn, logOut } from '../stores/auth'
 import { ref } from 'vue'
 import { auth } from "../FirebaseConfig"
 import { signInWithEmailAndPassword } from "firebase/auth"
+import { useRouter } from 'vue-router'
 
 let user_email = ref('')
 let user_password = ref('')
 let error_message = ref('')
-
+const router = useRouter()
 
 const userSignIn = (user_email: string, user_password: string) => {
     if (!user_email) {
@@ -19,9 +20,12 @@ const userSignIn = (user_email: string, user_password: string) => {
         return
     }
 
+    logOut()
+
     signInWithEmailAndPassword(auth, user_email, user_password)
     .then((userCredential) => {
         const user = userCredential.user;
+        router.push('/')
     })
     .catch((error) => {
         const error_code = error.code
@@ -46,6 +50,7 @@ const userSignIn = (user_email: string, user_password: string) => {
         <input type="text" v-model="user_password">
         <p>{{ error_message }}</p>
         <button @click="userSignIn(user_email, user_password)">サインイン</button>
-        <button @click="googleSignIn">google登録</button>
+        <button @click="googleSignIn">googleログイン</button>
+        <button @click="moveNextScreen">遷移</button>
     </div>
 </template>

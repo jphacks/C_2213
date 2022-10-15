@@ -1,13 +1,9 @@
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth"
 import { auth } from "../FirebaseConfig"
+import { useRouter } from 'vue-router'
 
 const provider = new GoogleAuthProvider();
-
-interface ResponseData {
-    states: number,
-    message: string
-}
-
+const router = useRouter()
 
 export const googleSignIn = async () => {
     console.log("click")
@@ -17,7 +13,7 @@ export const googleSignIn = async () => {
         const token = credential.accessToken;
         const user = result.user;
         console.log(user)
-
+        router.push('/')
     }).catch((error) => {
         console.log(error)
 
@@ -29,13 +25,12 @@ export const googleSignIn = async () => {
     });
 }
 
-
 export const logOut = () =>
     signOut(auth).then(() => {
-    console.log("Successfully LogOut")
+        console.log("Successfully LogOut")
     }).catch((error) => {
-    console.log("Error LogOut")
-    console.log(error)
+        console.log("Error LogOut")
+        console.log(error)
     });
 
 export const getUser = () => {

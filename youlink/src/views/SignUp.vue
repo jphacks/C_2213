@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { googleSignIn } from '../stores/auth'
+import { googleSignIn, logOut } from '../stores/auth'
 import { ref } from 'vue'
 import { auth } from "../FirebaseConfig"
 import { createUserWithEmailAndPassword } from "firebase/auth"
+import { useRouter } from 'vue-router'
 
 let user_email = ref('')
 let user_password = ref('')
 let user_repassword = ref('')
 let error_message = ref('')
+const router = useRouter()
 
 const userSignUp = async (user_email: string, user_password: string) => {
     if (!user_email) {
@@ -23,10 +25,13 @@ const userSignUp = async (user_email: string, user_password: string) => {
         return
     }
 
+    logOut()
+
     createUserWithEmailAndPassword(auth, user_email, user_password)
     .then((userCredential) => {
         console.log("signup")
         const user = userCredential.user;
+        router.push('/')
     })
     .catch((error) => {
         const error_code = error.code;
