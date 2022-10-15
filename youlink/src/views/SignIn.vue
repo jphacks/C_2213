@@ -51,6 +51,5 @@ const userSignIn = (user_email: string, user_password: string) => {
         <p>{{ error_message }}</p>
         <button @click="userSignIn(user_email, user_password)">サインイン</button>
         <button @click="googleSignIn">googleログイン</button>
-        <button @click="moveNextScreen">遷移</button>
     </div>
 </template>
