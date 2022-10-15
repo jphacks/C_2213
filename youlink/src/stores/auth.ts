@@ -1,28 +1,27 @@
-import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth"
+import { signInWithPopup, signOut, TwitterAuthProvider } from "firebase/auth"
 import { auth } from "../FirebaseConfig"
 import { useRouter } from 'vue-router'
+export const router = useRouter()
 
-const provider = new GoogleAuthProvider();
-const router = useRouter()
-
-export const googleSignIn = async () => {
-    console.log("click")
+export const twitterSignIn = () => {
     signInWithPopup(auth, provider)
     .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-        console.log(user)
-        router.push('/')
+      const credential = TwitterAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const secret = credential.secret;
+  
+      const user = result.user;
+        
     }).catch((error) => {
-        console.log(error)
-
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.customData.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-
-    });
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = TwitterAuthProvider.credentialFromError(error);
+      // ...
+    });  
 }
 
 export const logOut = () =>

@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { googleSignIn, logOut } from '../stores/auth'
+import { logOut } from '../stores/auth'
 import { ref } from 'vue'
 import { auth } from "../FirebaseConfig"
-import { signInWithEmailAndPassword } from "firebase/auth"
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, } from "firebase/auth"
 import { useRouter } from 'vue-router'
 
 let user_email = ref('')
 let user_password = ref('')
 let error_message = ref('')
 const router = useRouter()
+
 
 const userSignIn = (user_email: string, user_password: string) => {
     if (!user_email) {
@@ -41,7 +42,19 @@ const userSignIn = (user_email: string, user_password: string) => {
         }
     })
 }
-
+const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+    .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const user = result.user;
+        console.log(user)
+        
+        router.push('/')
+    }).catch((error) => {
+        console.log(error)
+    })
+}
 </script>
 
 <template>

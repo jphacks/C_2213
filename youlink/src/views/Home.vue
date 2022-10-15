@@ -43,10 +43,10 @@ export default ({
       if (user) {
         const uid = user.uid;
       } else {
-        console.log("not set")
         router.push('/top')
       }
     })
+    
     let openModal = () => {
       showContent.value = true;
     };

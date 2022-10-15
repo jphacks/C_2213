@@ -10,14 +10,13 @@ let username = ref('')
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const uid = user.uid;
-    console.log("set")
     if (user.displayName)
       username.value = user.displayName
     else
       username.value = "ゲスト"
-    // ...
-  } else {
-    console.log("not set")
+  }
+  else {
+    username.value = ''
   }
 })
 </script>

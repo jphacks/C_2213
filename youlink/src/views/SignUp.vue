@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { googleSignIn, logOut } from '../stores/auth'
+import { logOut } from '../stores/auth'
 import { ref } from 'vue'
 import { auth } from "../FirebaseConfig"
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { useRouter } from 'vue-router'
 
 let user_email = ref('')
@@ -59,6 +59,20 @@ const userSignUp = async (user_email: string, user_password: string) => {
         }
     })
 }
+
+const googleSignUp = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+    .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const user = result.user;
+        console.log(user)
+        
+        router.push('/')
+    }).catch((error) => {
+        console.log(error)
+    })
+}
 </script>
 
 <template>
@@ -68,6 +82,6 @@ const userSignUp = async (user_email: string, user_password: string) => {
         <input type="text" v-model="user_repassword">
         <p>{{error_message}}</p>
         <button @click="userSignUp(user_email, user_password)">登録</button>
-        <button @click="googleSignIn">google登録</button>
+        <button @click="googleSignUp">google登録</button>
     </div>
 </template>
