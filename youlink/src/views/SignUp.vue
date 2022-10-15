@@ -2,7 +2,7 @@
 import { googleSignIn, logOut } from '../stores/auth'
 import { ref } from 'vue'
 import { auth } from "../FirebaseConfig"
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { useRouter } from 'vue-router'
 
 let user_email = ref('')
@@ -31,6 +31,16 @@ const userSignUp = async (user_email: string, user_password: string) => {
     .then((userCredential) => {
         console.log("signup")
         const user = userCredential.user;
+
+        updateProfile(auth.currentUser, {
+        displayName: "ゲスト"
+        }).then(() => {
+        // Profile updated!
+        // ...
+        }).catch((error) => {
+        // An error occurred
+        // ...
+        });
         router.push('/')
     })
     .catch((error) => {

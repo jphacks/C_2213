@@ -35,10 +35,11 @@ export const logOut = () =>
 
 export const getUser = () => {
     const user = auth.currentUser;
-
     if (user) {
-    console.log(user)
+        console.log(user)
+        return user
     } else {
-    console.log("Not Login")
+        console.log("Not Login")
+        return
     }
 }

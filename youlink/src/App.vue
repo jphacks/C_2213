@@ -1,6 +1,25 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import { logOut, getUser } from '../src/stores/auth'
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from '../src/FirebaseConfig' 
+import { ref } from 'vue'
+
+let username = ref('')
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+    console.log("set")
+    if (user.displayName)
+      username.value = user.displayName
+    else
+      username.value = "ゲスト"
+    // ...
+  } else {
+    console.log("not set")
+  }
+})
 </script>
 
 <template>
@@ -15,8 +34,16 @@ import { logOut, getUser } from '../src/stores/auth'
       <div class="scene">
         <RouterView /> 
       </div>
-      <h2 @click="logOut">LogOut</h2>
-      <h2 @click="getUser">getUser</h2>
+      <div v-if="username">
+        <p @click="logOut">LogOut</p>
+        <p>{{ username }}</p>
+      </div>
+      <div v-else>
+        <RouterLink to="/signin"><p>SignIn</p></RouterLink>
+        <RouterLink to="/signup"><p>SignUp</p></RouterLink>
+        <p @click="getUser">getUser</p>
+      </div>
+
     </div>
     
 </template>
