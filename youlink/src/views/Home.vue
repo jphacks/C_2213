@@ -21,8 +21,13 @@ YOULINKで募集させていただきました。</p>
 </template>
 
 <script>
-import { ref } from 'vue';
 import HomeModal from '../components/HomeModal.vue'
+import { ref, onMounted } from 'vue'
+import { getUser } from '../stores/auth'
+import { useRouter } from 'vue-router'
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from '../FirebaseConfig'
+
 
 export default ({
   components: {
@@ -32,7 +37,16 @@ export default ({
     //モーダルクリックチェック
     let showContent = ref(false);
     const textInput = ref('');
+    const router = useRouter()
 
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+      } else {
+        router.push('/top')
+      }
+    })
+    
     let openModal = () => {
       showContent.value = true;
     };
