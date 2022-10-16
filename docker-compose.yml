@@ -10,4 +10,3 @@ services:
       - ./youlink:/app
     ports:
       - "5173:5173"
-      - "9005:9005"
