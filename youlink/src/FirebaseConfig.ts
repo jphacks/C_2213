@@ -18,18 +18,3 @@ export const app = initializeApp(config)
 export const auth = getAuth(app);
 export const db = getFirestore(app)
 export const storage =getStorage(app)
-
-export const createFirebase=()=>{
-    try {
-        console.log("起動");
-        const  docRef = addDoc(collection(db, "users"), {
-          first: "Alan",
-          middle: "Mathison",
-          last: "Turing",
-          born: 1912
-        });
-        console.log("Document written with ID: ", docRef);
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-}
