@@ -20,7 +20,7 @@ YOULINKで募集させていただきました。</p>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import HomeModal from '../components/HomeModal.vue'
 import { ref, onMounted } from 'vue'
 import { getUser } from '../stores/auth'
