@@ -9,24 +9,13 @@
     </div>
     <div>
       <Datepicker v-model="date1" range />
-      <div v-if=date1>
-        <Datepicker v-model="date2" range />
-      </div>
-      <div v-if=date2>
-        <Datepicker v-model="date3" range />
-      </div>
-      <div v-if=date3>
-        <Datepicker v-model="date4" range />
-      </div>
-      <div v-if=date4>
-        <Datepicker v-model="date5" range />
-      </div>
+      <Datepicker v-model="date2" range />
+      <Datepicker v-model="date3" range />
+      <Datepicker v-model="date4" range />
+      <Datepicker v-model="date5" range />
     </div>
     <div>
-      時刻<input type="text" v-model="time"><br/>
-    </div>
-    <div>
-      画像<input type="text" v-model="image"><br/>
+      画像<input type="file" accept="image/jpeg,image/png,image/gif" @change="uploadFile"> <br/>
     </div>
     <div>
       一言<input type="text" v-model="describe"><br/>
@@ -39,23 +28,23 @@
 </template>
 
 <script lang="ts">
-import {defineComponent,ref,onMounted} from 'vue'
+import {defineComponent,ref as vueRef,onMounted} from 'vue'
 import { getFirestore,addDoc,collection,serverTimestamp, getDocs } from 'firebase/firestore'
+import { getDownloadURL, ref ,getStorage, uploadBytesResumable } from "firebase/storage";
 import {db}from '../FirebaseConfig'
 
 export default defineComponent({
   setup(){
 
-    const title = ref<string>()
-    const tag = ref<string>()
-    const date1 = ref<any>()
-    const date2 = ref<any>()
-    const date3 = ref<any>()
-    const date4 = ref<any>()
-    const date5 = ref<any>()
-    const time = ref<string>()
-    const image = ref<string>()
-    const describe = ref<string>()
+    const title = vueRef<string>()
+    const tag = vueRef<string>()
+    const date1 = vueRef<any>()
+    const date2 = vueRef<any>()
+    const date3 = vueRef<any>()
+    const date4 = vueRef<any>()
+    const date5 = vueRef<any>()
+    const describe = vueRef<string>()
+    const fileData =vueRef<any>()
 
     onMounted(() => {
             const startDate = new Date();
@@ -63,25 +52,38 @@ export default defineComponent({
             date1.value = [startDate, endDate];
     })
 
+    const uploadFile = (event:any)=>{
+      fileData.value = event.target.files[0]
+    }
 
-  
+    //投稿時の発火
     const create=()=>{
-      if(!title.value || tag.value || date1.value || time.value || image.value||describe.value)
       try {
-        console.log("起動");
-        const  docRef = addDoc(collection(db, "users"), {
-          title: title.value,
-          tag: tag.value,
-          date1: date1.value,
-          time: time.value,
-          image: image.value,
-          describe: describe.value
-        });
-        console.log("Document written with ID: ", docRef);
+        const metadata={ contentType: 'image/jpeg',}
+        const storage =getStorage();
+        const imageRef=ref(storage,'/'+ title.value);
+
+        uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
+          getDownloadURL(snapshot.ref).then((url)=>{
+            addDoc(collection(db, "users"), {
+            title: title.value,
+            tag: tag.value,
+            date1: date1.value,
+            describe: describe.value,
+            filePath : url,
+            createDate: serverTimestamp()
+          }
+
+          )
+        }
+        )
+      });
+      
       } catch (e) {
         console.error("Error adding document: ", e);
       }
     }
+
     return{
     create,
     title,
@@ -91,9 +93,9 @@ export default defineComponent({
     date3,
     date4,
     date5,
-    time,
-    image,
-    describe
+    describe,
+    uploadFile,
+    fileData
   }
   }
 })

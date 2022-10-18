@@ -11,12 +11,6 @@
         </div>
     </div>
     <HomeModal v-if="showContent"/>
-    <!-- <div v-if="showContent">
-        <h1>JPHACKS登壇者語りませんか？</h1>
-        <p>初めまして。名城大学のせーと申します。今年度のJPHACKSに参加しましたが、他のグループのエンジニアの方とお話しする機会がなかったので、
-YOULINKで募集させていただきました。</p>
-        <button @click="moveOffer">話したい</button>
-    </div> -->
   </div>
 </template>
 
