@@ -2,7 +2,7 @@
 import { logOut } from '../stores/auth'
 import { ref } from 'vue'
 import { auth } from "../FirebaseConfig"
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, } from "firebase/auth"
+import { GoogleAuthProvider, GithubAuthProvider, signInWithEmailAndPassword, signInWithPopup, TwitterAuthProvider, signInWithRedirect } from "firebase/auth"
 import { useRouter } from 'vue-router'
 
 let user_email = ref('')
@@ -55,6 +55,32 @@ const googleSignIn = () => {
         console.log(error)
     })
 }
+
+const githubSignIn = () => {
+    const provider = new GithubAuthProvider()
+    signInWithPopup(auth, provider)
+    .then((result) => {
+        const credential = GithubAuthProvider.credentialFromResult(result);
+        const user = result.user;
+        router.push('/')
+    }).catch((error) => {
+        console.log(error)
+    })
+}
+
+const twitterSignIn = () => {
+    const provider = new TwitterAuthProvider()
+    signInWithPopup(auth, provider)
+    .then((result) => {
+    //   const credential = TwitterAuthProvider.credentialFromResult(result);
+    //   const token = credential.accessToken;
+    //   const secret = credential.secret;
+        const user = result.user;
+        router.push('/')
+    }).catch((error) => {
+        console.log(error)
+    });  
+}
 </script>
 
 <template>
@@ -64,5 +90,7 @@ const googleSignIn = () => {
         <p>{{ error_message }}</p>
         <button @click="userSignIn(user_email, user_password)">サインイン</button>
         <button @click="googleSignIn">googleログイン</button>
+        <button @click="githubSignIn">githubログイン</button>
+        <button @click="twitterSignIn">twitterログイン</button>
     </div>
 </template>
