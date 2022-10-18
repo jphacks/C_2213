@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "youlink/public",
+    "public": "youlink/dist",
     "ignore": [
       "firebase.json",
       "**/.*",
