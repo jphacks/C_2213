@@ -10,10 +10,9 @@
             <h1 class="recruitment-title">JPHACKS登壇者語りませんか？</h1>
         </div>
     </div> -->
-    <div class="post" v-for="post in posts" :key="post">
+    <div class="post" v-for="post in posts" :key="post" @click="openModal">
       <div class="bl_article">タイトル：{{ post.title }}</div>
-      <div class="bl_article"><img :src=post.filePath></div>
-      <div class="bl_article">{{ post.date1 }}</div>
+      <div class="bl_article">画像:<img :src=post.filePath></div>
     </div>
     
     <HomeModal v-if="showContent"/>
@@ -43,19 +42,16 @@ export default ({
 
     //firebaseからpostを取得
     const fetchFirebase=async()=>{
-      console.log("firebaseに接続成功しました")
       const data:Array<any>=[]
-      const querySnapshot = await getDocs(collection(getFirestore(),"users"))
+      const querySnapshot = await getDocs(collection(getFirestore(),"post"))
       querySnapshot.forEach((doc)=>{
         data.push(doc.data())
       })
-      console.log(data)
       return data
     }
 
     //postsに追加
     onMounted(()=>{
-      console.log("onMounted")
       fetchFirebase().then((data)=>{
         posts.value =data
         console.log(posts.value)

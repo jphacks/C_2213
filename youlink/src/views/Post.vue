@@ -65,18 +65,17 @@ export default defineComponent({
 
         uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
           getDownloadURL(snapshot.ref).then((url)=>{
-            addDoc(collection(db, "users"), {
+            addDoc(collection(db, "post"), {
             title: title.value,
             tag: tag.value,
-            date1: date1.value,
-            describe: describe.value,
+            schedule: date1.value,
+            description: describe.value,
             filePath : url,
-            createDate: serverTimestamp()
+            created_at: serverTimestamp()
           }
-
           )
-        }
-        )
+        })
+        console.log("募集しました");
       });
       
       } catch (e) {
@@ -96,7 +95,7 @@ export default defineComponent({
     describe,
     uploadFile,
     fileData
-    }
+  }
   }
 })
 </script>
