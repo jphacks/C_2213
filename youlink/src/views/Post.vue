@@ -29,13 +29,12 @@
 
 <script lang="ts">
 import {defineComponent,ref as vueRef,onMounted} from 'vue'
-import { getFirestore,addDoc,collection,serverTimestamp, getDocs } from 'firebase/firestore'
+import { getFirestore,addDoc,collection,serverTimestamp, getDocs,setDoc,doc } from 'firebase/firestore'
 import { getDownloadURL, ref ,getStorage, uploadBytesResumable } from "firebase/storage";
 import {db}from '../FirebaseConfig'
 
 export default defineComponent({
   setup(){
-
     const title = vueRef<string>()
     const tag = vueRef<string>()
     const date1 = vueRef<any>()
@@ -65,24 +64,22 @@ export default defineComponent({
 
         uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
           getDownloadURL(snapshot.ref).then((url)=>{
-            addDoc(collection(db, "post"), {
-            title: title.value,
-            tag: tag.value,
-            schedule: date1.value,
-            description: describe.value,
-            filePath : url,
-            created_at: serverTimestamp()
-          }
-          )
+           addDoc(collection(db, "post"), {
+              title: title.value,
+              schedule: date1.value,
+              description: describe.value,
+              filePath : url,
+              created_at: serverTimestamp(),
+              tag: tag.value,
+            })
         })
         console.log("募集しました");
       });
-      
+
       } catch (e) {
         console.error("Error adding document: ", e);
       }
     }
-
     return{
     create,
     title,
