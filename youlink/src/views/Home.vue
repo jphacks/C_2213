@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Sidebar></Sidebar>
     <div class="search">
          <h1>ホーム画面</h1>
         <input type="text" v-model="textInput">
@@ -21,6 +22,7 @@ YOULINKで募集させていただきました。</p>
 </template>
 
 <script>
+import Sidebar from '../components/Sidebar.vue'
 import HomeModal from '../components/HomeModal.vue'
 import { ref, onMounted } from 'vue'
 import { getUser } from '../stores/auth'
@@ -32,6 +34,7 @@ import { auth } from '../FirebaseConfig'
 export default ({
   components: {
     HomeModal,
+    Sidebar
   },
   setup() {
     //モーダルクリックチェック
@@ -56,7 +59,7 @@ export default ({
 });
 </script>
 
-<style>
+<style lang="scss">
 .search{
     text-align: center;
 }

@@ -102,10 +102,27 @@ const twitterSignUp = () => {
 </script>
 
 <template>
-    <div>
-        <input type="email" v-model="user_email">
-        <input type="text" v-model="user_password">
-        <input type="text" v-model="user_repassword">
+    <div class="frame-border">
+        <h2 id="signup-title">YOULINKへようこそ</h2>
+        <div class="input-form">
+            <div class="username-container form-items">
+                <label for="input-username">ユーザ名</label>
+                <input id="input-username" class="" type="text">
+            </div>
+            <div class="email-container form-items">
+                <label for="input-email">メールアドレス</label>
+                <input id="input-email" class="" type="email" v-model="user_email">
+            </div>
+            <div class="password-container form-items">
+                <label for="input-password">パスワード</label>
+                <input id="input-password" class="" type="text" v-model="user_password">
+            </div>
+            <div class="repassword-container form-items">
+                <label for="input-repassword">パスワード再入力</label>
+                <input id="input-repassword" class="" type="text" v-model="user_repassword">
+            </div>
+        </div>
+
         <p>{{error_message}}</p>
         <button @click="userSignUp(user_email, user_password)">登録</button>
         <button @click="googleSignUp">google登録</button>
@@ -113,3 +130,27 @@ const twitterSignUp = () => {
         <button @click="twitterSignUp">twitterログイン</button>
     </div>
 </template>
+
+<style lang="scss">
+    $main-color: #2FDCE7;
+
+    .frame-border {
+        background-color: $main-color;
+    }
+
+    .input-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 1rem;
+        background-color: #FFFFFF;
+    }
+
+    .form-items {
+        margin: 0.5rem;
+    }
+    
+    #signup-title {
+        color: #FFFFFF
+    }
+</style>
