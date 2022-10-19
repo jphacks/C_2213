@@ -17,6 +17,7 @@
     "firebase-admin": "^11.1.0",
     "pinia": "^2.0.21",
     "vue": "^3.2.38",
+    "vue-nl2br": "^1.1.1",
     "vue-router": "^4.1.5"
   },
   "devDependencies": {

@@ -29,6 +29,7 @@ onAuthStateChanged(auth, (user) => {
         <RouterLink to="/notification">Notification</RouterLink><br>
         <RouterLink to="/post">Post</RouterLink><br>
         <RouterLink to="/users">Users</RouterLink><br>
+        <RouterLink to="/directmessage">DM</RouterLink><br>
       </div>
       <div class="scene">
         <RouterView /> 
