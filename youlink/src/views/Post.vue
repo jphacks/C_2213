@@ -96,7 +96,7 @@ export default defineComponent({
     describe,
     uploadFile,
     fileData
-  }
+    }
   }
 })
 </script>

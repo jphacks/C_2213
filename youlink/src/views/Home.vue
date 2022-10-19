@@ -3,13 +3,19 @@
     <div class="search">
          <h1>ホーム画面</h1>
         <input type="text" v-model="textInput">
-        {{textInput}}
+        <p>{{textInput}}</p>
     </div>
-    <div class="recruitment-list" >
+    <!-- <div class="recruitment-list" >
         <div class="recruitment-bg" @click="openModal">
             <h1 class="recruitment-title">JPHACKS登壇者語りませんか？</h1>
         </div>
+    </div> -->
+    <div class="post" v-for="post in posts" :key="post">
+      <div class="bl_article">タイトル：{{ post.title }}</div>
+      <div class="bl_article"><img :src=post.filePath></div>
+      <div class="bl_article">{{ post.date1 }}</div>
     </div>
+    
     <HomeModal v-if="showContent"/>
   </div>
 </template>
@@ -21,6 +27,7 @@ import { getUser } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from '../FirebaseConfig'
+import { getFirestore, addDoc,collection,serverTimestamp, getDocs } from '@firebase/firestore'
 
 
 export default ({
@@ -32,6 +39,28 @@ export default ({
     let showContent = ref(false);
     const textInput = ref('');
     const router = useRouter()
+    const posts = ref()
+
+    //firebaseからpostを取得
+    const fetchFirebase=async()=>{
+      console.log("firebaseに接続成功しました")
+      const data:Array<any>=[]
+      const querySnapshot = await getDocs(collection(getFirestore(),"users"))
+      querySnapshot.forEach((doc)=>{
+        data.push(doc.data())
+      })
+      console.log(data)
+      return data
+    }
+
+    //postsに追加
+    onMounted(()=>{
+      console.log("onMounted")
+      fetchFirebase().then((data)=>{
+        posts.value =data
+        console.log(posts.value)
+      })
+    })
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -45,7 +74,7 @@ export default ({
       showContent.value = true;
     };
 
-    return { textInput,showContent, openModal };
+    return {  fetchFirebase,textInput,showContent, openModal,posts };
   },
 });
 </script>
@@ -55,7 +84,8 @@ export default ({
     text-align: center;
 }
 
-.recruitment-list{
+.post{
+  border: aqua solid 1px;
 
 }
 .recruitment-bg{
