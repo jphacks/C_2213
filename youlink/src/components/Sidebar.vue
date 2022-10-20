@@ -1,14 +1,14 @@
 <template>
     <div class="sidebar">
-        <div class="top-element">
+        <div class="sidebar-top-element">
             <RouterLink to="/"><img src="../assets/home_icon.png"></RouterLink>
             <RouterLink to="/messages"><img src="../assets/message_icon.png"></RouterLink>
             <RouterLink to="/notification"><img src="../assets/notification_icon.png"></RouterLink>
             <RouterLink to="/post"><img src="../assets/post_icon.png"></RouterLink>
         </div>
-        <div class="bottom-element">
+        <div class="sidebar-bottom-element">
             <RouterLink to="/users">
-                <div class="user-icon">a</div>
+                <div class="sidebar-user-icon"><img src="../assets/computer_programming_man.png"></div>
             </RouterLink>
         </div>
     </div>
@@ -21,28 +21,35 @@ $main-color: #2FDCE7;
     position: fixed;
     background-color: $main-color;
     height: 100vh;
+    width: 6rem;
     display: flex;
     flex-direction: column;
 }
 
-.top-element {
+.sidebar-top-element {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
-.top-element img {
+.sidebar-top-element img {
     margin: 1rem;
     position: relative;
-    left: 1rem;
+    width: 3rem;
 }
 
-.bottom-element {
-    position: absolute;
-    bottom: 0;
+.sidebar-bottom-element {
+    position: relative;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
 }
 
-.user-icon {
-    widows: 30px;
+.sidebar-user-icon img{
+    width: 4rem;
+    height: 4rem;
     background-color: #FFFFFF;
+    border-radius: 50%;
 }
 </style>

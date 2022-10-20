@@ -66,7 +66,7 @@ export default ({
 <style lang="scss">
 .grid {
   display: grid;
-  grid-template-columns: 10% 90%;
+  grid-template-columns: 15% 85%;
 }
 
 .home-container {
@@ -89,8 +89,9 @@ export default ({
   grid-template-columns: 30% 30% 30%;
 }
 .recruitment-bg{
-    border: solid 2px;
+    border-radius: 5px;
     margin:10px 10px 10px 10px;
+    box-shadow: 0 0 8px gray;
 }
 
 </style>
