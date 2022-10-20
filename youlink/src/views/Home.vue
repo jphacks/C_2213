@@ -3,19 +3,25 @@
     <div class="search">
          <h1>ホーム画面</h1>
         <input type="text" v-model="textInput">
-        <p>{{textInput}}</p>
+        <p>{{showContent}}</p>
     </div>
     <!-- <div class="recruitment-list" >
         <div class="recruitment-bg" @click="openModal">
             <h1 class="recruitment-title">JPHACKS登壇者語りませんか？</h1>
         </div>
     </div> -->
-    <div class="post" v-for="post in posts" :key="post" @click="openModal">
-      <div class="bl_article">タイトル：{{ post.title }}</div>
-      <div class="bl_article">画像:<img :src=post.filePath></div>
+    <div class="post" v-for="post in posts" :key="post" >
+      <div  >
+        <div class="bl_article" >
+          <p @click="openModal(post)">タイトル：{{ post.data.title }}</p>
+           画像:<img :src=post.filePath>
+        </div>
+        <div v-if="showContent==true">
+          <HomeModal  :title="post.data.title" :docId="post.key" :showContent="showContent" @emitTest="testFn"/>
+        </div>
+      </div>
     </div>
     
-    <HomeModal v-if="showContent"/>
   </div>
 </template>
 
@@ -35,28 +41,49 @@ export default ({
   },
   setup() {
     //モーダルクリックチェック
-    let showContent = ref(false);
+    const showContent = ref<boolean>(false);
     const textInput = ref('');
     const router = useRouter()
     const posts = ref()
+    const postList =<any>[];
+    const msg = ref('Hello TypeScript');
+    let postItem = ref()
 
+    const testFn = (param:any)=>{
+      showContent.value= param
+      console.log(showContent.value)
+    } 
+    
     //firebaseからpostを取得
     const fetchFirebase=async()=>{
       const data:Array<any>=[]
       const querySnapshot = await getDocs(collection(getFirestore(),"post"))
       querySnapshot.forEach((doc)=>{
-        data.push(doc.data())
+        postList.push({
+          key: doc.id,
+          data:doc.data(),
+        })
       })
-      return data
+      console.log(postList)
+      return postList
     }
 
-    //postsに追加
+    //postsにfirebaseから募集一覧を格納
     onMounted(()=>{
       fetchFirebase().then((data)=>{
         posts.value =data
         console.log(posts.value)
       })
     })
+
+    const openModal=(post:any) => {
+      console.log(post)
+      showContent.value=true
+      postItem = post
+      console.log(post.data.title)
+      console.log("押しました")
+      console.log(showContent.value)
+    };
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -65,12 +92,8 @@ export default ({
         router.push('/top')
       }
     })
-    
-    let openModal = () => {
-      showContent.value = true;
-    };
 
-    return {  fetchFirebase,textInput,showContent, openModal,posts };
+    return {  msg,fetchFirebase,textInput,showContent,posts,openModal,postItem,testFn };
   },
 });
 </script>

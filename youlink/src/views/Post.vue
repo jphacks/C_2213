@@ -31,7 +31,8 @@
 import {defineComponent,ref as vueRef,onMounted} from 'vue'
 import { getFirestore,addDoc,collection,serverTimestamp, getDocs,setDoc,doc } from 'firebase/firestore'
 import { getDownloadURL, ref ,getStorage, uploadBytesResumable } from "firebase/storage";
-import {db}from '../FirebaseConfig'
+import {db,auth}from '../FirebaseConfig'
+import {getUser} from '../stores/auth'
 
 export default defineComponent({
   setup(){
@@ -71,6 +72,7 @@ export default defineComponent({
               filePath : url,
               created_at: serverTimestamp(),
               tag: tag.value,
+              uid: auth.currentUser?.uid
             })
         })
         console.log("募集しました");
