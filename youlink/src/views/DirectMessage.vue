@@ -25,8 +25,8 @@
 
 <script setup >
 import { ref } from "vue";
-import  Chat  from "./components/Chat.vue";
-import  Form  from "./components/Form.vue";
+import  Chat  from "../components/Chat.vue";
+import  Form  from "../components/Form.vue";
 import { getUser } from "../stores/auth";
 
 const user = ref(getUser());
