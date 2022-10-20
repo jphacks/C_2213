@@ -1,85 +1,67 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import { logOut, getUser } from '../src/stores/auth'
+import { onAuthStateChanged } from "firebase/auth"
+import { auth } from '../src/FirebaseConfig' 
+import { ref } from 'vue'
+
+let username = ref('')
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    const uid = user.uid;
+    if (user.displayName)
+      username.value = user.displayName
+    else
+      username.value = "ゲスト"
+  }
+  else {
+    username.value = ''
+  }
+})
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+    <div class="flexbox">
+      <div class="sidebar">
+        <RouterLink to="/">Home</RouterLink><br>
+        <RouterLink to="/messages">Messages</RouterLink><br>
+        <RouterLink to="/notification">Notification</RouterLink><br>
+        <RouterLink to="/post">Post</RouterLink><br>
+        <RouterLink to="/users">Users</RouterLink><br>
+      </div>
+      <div class="scene">
+        <RouterView /> 
+      </div>
+      <div v-if="username">
+        <p @click="logOut">LogOut</p>
+        <p>{{ username }}</p>
+      </div>
+      <div v-else>
+        <RouterLink to="/signin"><p>SignIn</p></RouterLink>
+        <RouterLink to="/signup"><p>SignUp</p></RouterLink>
+        <p @click="getUser">getUser</p>
+      </div>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
     </div>
-  </header>
-
-  <RouterView />
+    
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
+.flexbox{
+  display: flex;
   width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+  height: 100%;
+  float: left;
 }
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.sidebar{
+  width:10%;
+  background-color: aqua;
+  height: 100%;
+  color: white;
+  float: left; 
 }
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.scene{
+  width:100%;
 }
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+</style>>
