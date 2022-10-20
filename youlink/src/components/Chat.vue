@@ -7,7 +7,7 @@
             :subtitle="item.displayName"
             :text="item.text"
             :class="item.uid === userChat.uid && 'ml-auto'"
-        >{{item.id}},{{item.displayName}},{{item.text}} </div>
+        >id:{{item.id}},name:{{item.displayName}},text:{{item.text}} </div>
     </div>
 </template>
 

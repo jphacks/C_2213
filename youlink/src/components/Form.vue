@@ -22,7 +22,7 @@ const sendMessage = async () => {
     try {
         await addDoc(collection(db, "chats"), {
             text: message.value,
-            time: serverTimestamp(),
+            created_at: serverTimestamp(),
             uid: auth.currentUser.uid,
             displayName: auth.currentUser.displayName,
         });
