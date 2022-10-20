@@ -16,9 +16,9 @@
           <p @click="openModal(post)">タイトル：{{ post.data.title }}</p>
            画像:<img :src=post.filePath>
         </div>
-        <div v-if="showContent==true">
-          <HomeModal  :title="post.data.title" :docId="post.key" :showContent="showContent" @emitTest="testFn"/>
-        </div>
+        <!-- <div v-if="showContent==true"> -->
+          <HomeModal  :title="post.data.title" :docId="post.key" :username="post.data.usename" :description="post.data.description" :showContent="showContent" @emitTest="testFn"/>
+        <!-- </div> -->
       </div>
     </div>
     

@@ -2,7 +2,8 @@
     <div v-if="showContent==true" id="overlay" >
         <div class="delete-modal" >
             <p>タイトル：{{title}}</p>
-            {{showContent }}
+            <p>ユーザー名：{{username}}</p>
+            <p>一言：{{description}}</p>
             <button @click="moveOffer">話したい</button>
             <button @click="modalClose">戻る</button>
         </div>
@@ -20,10 +21,18 @@ import {useRouter} from 'vue-router'
 import { defineComponent} from 'vue';
 
 export default defineComponent({
-    
     props: {
         title: {
             type: String,
+        },
+        description:{
+            type: String
+        },
+        username:{
+            type: String
+        },
+        docId:{
+            type: Number
         },
         showContent:{
             type: Boolean 
@@ -33,7 +42,7 @@ export default defineComponent({
     setup(props,context){
         const router = useRouter()
         const moveOffer=()=>{
-            router.push('/offers')
+            router.push('/offers/'+props.docId)
         }
         const modalClose=()=>{
             // props.showContent = false;
