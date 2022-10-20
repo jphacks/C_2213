@@ -1,14 +1,13 @@
 <template>
     <div ref="chatsRef">
         <h1 class="text-center">Chats</h1>
-        <v-card
+        <div
             v-for="item of messages"
             :key="item.id"
             :subtitle="item.displayName"
             :text="item.text"
             :class="item.uid === userChat.uid && 'ml-auto'"
-            :color="item.uid === userChat.uid ? 'success' : '#555'"
-        ></v-card>
+        >{{item.id}},{{item.displayName}},{{item.text}} </div>
     </div>
 </template>
 
