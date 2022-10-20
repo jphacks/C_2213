@@ -17,7 +17,8 @@
     "firebase-admin": "^11.1.0",
     "pinia": "^2.0.21",
     "vue": "^3.2.38",
-    "vue-router": "^4.1.5"
+    "vue-router": "^4.1.5",
+    "vuetify": "^3.0.0-beta.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.4",
@@ -28,6 +29,7 @@
     "@vue/eslint-config-typescript": "^11.0.0",
     "@vue/test-utils": "^2.0.2",
     "@vue/tsconfig": "^0.1.3",
+    "@vuetify/vite-plugin": "*",
     "cypress": "^10.7.0",
     "eslint": "^8.22.0",
     "eslint-plugin-cypress": "^2.12.1",
@@ -39,6 +41,9 @@
     "typescript": "~4.7.4",
     "vite": "^3.0.9",
     "vitest": "^0.23.0",
-    "vue-tsc": "^0.40.7"
+    "vue-tsc": "^0.40.7",
+    "vuetify-loader": "*",
+    "vite-plugin-vuetify": "*",
+    "vue-cli-plugin-vuetify": "*"
   }
 }

@@ -1,13 +1,16 @@
 <template>
-    <form  @submit.prevent="sendMessage">
-        <textarea
-            label="入力してください"
+    <v-form class="w-100" @submit.prevent="sendMessage">
+        <v-text-field
+            color="success"
+            label="メッセージを入力してください"
+            variant="outlined"
             hide-details
+            append-icon="mdi-send"
+            @click:append="sendMessage"
             v-model="message"
         >
-        </textarea>
-        <input type="submit" @click="sendMessage" value="送信" />
-    </form>
+        </v-text-field>
+    </v-form>
 </template>
 
 <script setup lang="ts">
