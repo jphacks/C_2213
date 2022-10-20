@@ -32,7 +32,7 @@ const userSignUp = async (user_email: string, user_password: string) => {
         console.log("signup")
         const user = userCredential.user;
 
-        updateProfile(auth.currentUser, {
+        updateProfile(user, {
         displayName: "ゲスト"
         }).then(() => {
         // Profile updated!
