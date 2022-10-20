@@ -5,12 +5,12 @@
 <template>
     <div id="top-scene">
         <div class="top-element"></div>
-        <div class="title">
+        <div class="top-title">
             <h1>YOULINK</h1>
         </div>
-        <div class="router-container">
-            <RouterLink to="/signin" class="router-link"><button class="router-btn signin-btn">ログイン</button></RouterLink>
-            <RouterLink to="/signup" class="router-link"><button class="router-btn signup-btn">新規登録</button></RouterLink>
+        <div class="top-router-container">
+            <RouterLink to="/signin" class="top-router-link"><button class="top-router-btn top-signin-btn">ログイン</button></RouterLink>
+            <RouterLink to="/signup" class="top-router-link"><button class="top-router-btn top-signup-btn">新規登録</button></RouterLink>
         </div>
     </div>
 
@@ -31,26 +31,23 @@ $main-color: #2FDCE7;
     background-color: $main-color;
 }
 
-.title {
+.top-title {
     color: $main-color;
     font-size: 2rem;
+    text-align: center;
 }
 
-.router-link {
+.top-router-link {
     text-decoration: none;
 }
 
-.router-container {
+.top-router-container {
     display: flex;
     flex-direction: column;
-}
-
-.router-container {
-    display: flex;
     align-items: center;
 }
 
-.router-btn {
+.top-router-btn {
     margin: 1rem;
     width: 18rem;
     height: 2.5rem;
@@ -61,13 +58,13 @@ $main-color: #2FDCE7;
     align-items: center;
 }
 
-.signin-btn {
+.top-signin-btn {
     color: #FFFFFF;
     background-color: $main-color;
     border: $main-color 2px solid;
 }
 
-.signup-btn {
+.top-signup-btn {
     color: $main-color;
     background-color: #FFFFFF;
     border: $main-color 2px solid;
