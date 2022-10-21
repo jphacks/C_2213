@@ -1,7 +1,7 @@
 <template>
-    <v-form class="w-100" @submit.prevent="sendMessage">
+    <v-form class="w-100" color="#2FDCE7" @submit.prevent="sendMessage">
         <v-text-field
-            color="success"
+            color="#2FDCE7"
             label="メッセージを入力してください"
             variant="outlined"
             hide-details
@@ -10,20 +10,28 @@
             v-model="message"
         >
         </v-text-field>
+        <v-btn variant="outlined" @click="sendMessage" v-model="message" >送信</v-btn>
     </v-form>
 </template>
 
 <script setup lang="ts">
-import { addDoc, collection, serverTimestamp } from "@firebase/firestore";
+import { addDoc, collection, doc, serverTimestamp } from "@firebase/firestore";
 import { auth, db } from "../FirebaseConfig";
 import { ref } from "vue";
 
 const message = ref("");
 
+
 const sendMessage = async () => {
     console.log(message.value);
     try {
         await addDoc(collection(db, "chats"), {
+            text: message.value,
+            uid: auth.currentUser.uid,
+            displayName: auth.currentUser.displayName,
+            created_at: serverTimestamp(),
+        });
+        await addDoc(collection(db, "rooms",auth.currentUser.uid,"chats"), {
             text: message.value,
             created_at: serverTimestamp(),
             uid: auth.currentUser.uid,

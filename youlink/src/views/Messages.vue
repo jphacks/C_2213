@@ -19,6 +19,7 @@ export default defineComponent({
         const router = useRouter()
         const moveDirectMessage = ()=> {
             router.push('/directmessage')
+            
         }
         return {
             moveDirectMessage

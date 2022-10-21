@@ -10,7 +10,7 @@
             :subtitle="item.displayName"
             :text="item.text"
             :class="item.uid === userChat.uid && 'ml-auto'"
-            :color="item.uid === userChat.uid ? 'success' : '#555'"
+            :color="item.uid === userChat.uid ? '#2FDCE7' : '#2FDCE7'"
         ></v-card>
     </div>
 </template>
@@ -25,7 +25,7 @@ const userChat = ref(auth.currentUser);
 const messages = ref([]);
 const chatsRef = ref(null);
 
-const q = query(collection(db, "chats"), orderBy("created_at"));
+const q = query(collection(db,"chats"), orderBy("created_at"));
 const unsubscribe = onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
