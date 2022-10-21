@@ -1,10 +1,28 @@
 <template>
-  <div class="title">
-    <h1>DM画面</h1>
-  </div>
+    <v-app>
+        <v-main app v-if="user !== false">
+            <v-container>
+                <Chat v-if="user" />
+                <div v-else>
+                    <h1 class="text-center mt-15">
+                    セッション切れです。再度ログインしてください。
+                    </h1>
+                </div>
+            </v-container>
+        </v-main>
+
+        <v-footer class="d-flex flex-column" app v-if="user">
+            <Form />
+        </v-footer>
+    </v-app>
 </template>
-<style>
-.title{
-    text-align: center;
-}
-</style>
+
+<script setup >
+import { ref } from "vue";
+import  Chat  from "../components/Chat.vue";
+import  Form  from "../components/Form.vue";
+import { getUser } from "../stores/auth";
+
+const user = ref(getUser());
+
+</script>

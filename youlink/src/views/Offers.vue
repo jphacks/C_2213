@@ -16,41 +16,82 @@
       <div class="offer-inputarea-right">
         <p>ひとこと</p>
         <hr>
-        <textarea name="" v-model="message"></textarea>
+        <v-text-field
+            color="#2FDCE7"
+            variant="outlined"
+            hide-details
+            append-icon="mdi-send"
+            @click:append="apply"
+            v-model="message"
+        >
+        </v-text-field>
       </div>
     </div>
-    <button>応募</button>
+    <v-btn variant="outlined" @click="apply" >応募</v-btn>
+
 
   </div>
 </template>
 
-<script lang="ts">
-import {ref,onMounted} from 'vue'
-import { useRoute } from 'vue-router'
-import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where } from '@firebase/firestore'
+<script setup lang="ts">
+import { ref,onMounted} from 'vue'
+import { useRoute  } from 'vue-router'
+import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where,setDoc, doc } from '@firebase/firestore'
 import {auth,db} from '../FirebaseConfig'
+import { useRouter } from 'vue-router'
 
-export default ({
-  setup() {
-    const message=ref('')
-    const posts = ref()
-    const postList =<any>[];
+  const posts = ref()
+  const postList =<any>[];
 
     const fetchFirebase=async()=>{
-      const postRef=collection(db,"post");
-      const fetchFirebase=async()=>{
-      const postRef=collection(db,"post");
-      // const querySnapshot =getDocs(query(postRef,where("postid","==",(useRoute().params.posts))
-      // ).then(snapshot => {
-      //   snapshot.forEach(doc => {
-      //     console.log(`${doc.id}: ${doc.data().userName}`);
-      //   })
-      // }))
-      }}
+    const postRef=collection(db,"post");
+    const fetchFirebase=async()=>{
+    const postRef=collection(db,"post");
+    // const querySnapshot =getDocs(query(postRef,where("postid","==",(useRoute().params.posts))
+    // ).then(snapshot => {
+    //   snapshot.forEach(doc => {
+    //     console.log(`${doc.id}: ${doc.data().userName}`);
+    //   })
+    // }))
+    }}
 
-    return { message }
+const user = auth.currentUser
+const router = useRouter()
+
+const message = ref('')
+
+const apply = async () => {
+  // console.log("応募しました");
+  try {
+    const newDoc = doc(collection(db, "rooms")).id;
+    await setDoc(doc(db, "rooms", newDoc), {
+      room_id: newDoc,
+      title: "",
+      // owner_id: user.uid,
+      created_at: serverTimestamp(),
+      zoom_url: "",
+    });
+    await addDoc(collection(db, "rooms", newDoc, "chats"), {
+      text: message.value,
+      displayName: user.displayName,
+      created_at: serverTimestamp(),
+      uid: user.uid,
+    });
+    await addDoc(collection(db, "rooms", newDoc, "users"), {
+      uid: user.uid,
+      displayName: user.displayName,
+    });
+    await setDoc(doc(db, "users", user.uid, "room", newDoc), {
+      room_id: newDoc,
+      title: "",
+      Exist_room: true,
+    });
+    router.push({ name: 'directmessage', params: { id:newDoc} });
+    } catch (error) {
+        console.log(error);
     }
-})
+}
+
 </script>
 
 <style>

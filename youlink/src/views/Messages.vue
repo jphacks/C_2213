@@ -19,6 +19,7 @@ export default defineComponent({
 
         const moveDirectMessage = ()=> {
             router.push('/directmessage')
+            
         }
 
         const fetchFirebase=async()=>{

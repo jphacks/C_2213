@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs} from 'firebase/firestore'
 import { db } from '../FirebaseConfig'
 import { ref, onMounted } from 'vue'
 const data = ref()
@@ -24,3 +24,6 @@ const getUsers = async () => {
 onMounted(() => {
     getUsers()
 })
+
+
+
