@@ -22,6 +22,7 @@ const setUserDefault = async (user) => {
         icon: default_icon,
         twitter_url: '',
         github_url: '',
+        qiita_url: '',
         achievements: {},
         Is_public: false,
         created_at: serverTimestamp(),
