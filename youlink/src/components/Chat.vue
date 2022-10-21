@@ -16,16 +16,23 @@
 </template>
 
 <script setup >
-import { ref, watch, watchEffect } from "vue";
+import { ref, watch, watchEffect ,reactive } from "vue";
 import { auth, db } from "../FirebaseConfig";
 import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
+import { useRoute } from "vue-router";
 
 const userChat = ref(auth.currentUser);
 
+
 const messages = ref([]);
 const chatsRef = ref(null);
+const route = useRoute();
 
-const q = query(collection(db,"chats"), orderBy("created_at"));
+
+const room_id = route.params.id;
+
+
+const q = query(collection(db,"rooms",room_id,"chats"), orderBy("created_at"));
 const unsubscribe = onSnapshot(q, (snapshot) => {
     snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {

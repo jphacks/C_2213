@@ -17,10 +17,15 @@
 <script setup lang="ts">
 import { addDoc, collection, doc, serverTimestamp } from "@firebase/firestore";
 import { auth, db } from "../FirebaseConfig";
-import { ref } from "vue";
+import { ref ,watch, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+
 
 const message = ref("");
+const route = useRoute();
 
+
+const room_id = route.params.id;
 
 const sendMessage = async () => {
     console.log(message.value);
@@ -31,7 +36,7 @@ const sendMessage = async () => {
             displayName: auth.currentUser.displayName,
             created_at: serverTimestamp(),
         });
-        await addDoc(collection(db, "rooms",auth.currentUser.uid,"chats"), {
+        await addDoc(collection(db, "rooms",room_id,"chats"), {
             text: message.value,
             created_at: serverTimestamp(),
             uid: auth.currentUser.uid,
