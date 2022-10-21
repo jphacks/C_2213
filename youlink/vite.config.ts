@@ -12,13 +12,10 @@ export default defineConfig({
     },
   },
   server: {
-    // --hostと同義
     host: true,
-    // 立ち上げる際のポートを変更できます。
     port: 5173,
     watch: {
       usePolling: true
     }
-
   },
 });

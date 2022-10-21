@@ -34,10 +34,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { addDoc,setDoc, collection, doc, serverTimestamp } from "@firebase/firestore";
-import { auth,db } from "../FirebaseConfig";
+import { ref,onMounted} from 'vue'
+import { useRoute  } from 'vue-router'
+import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where,setDoc, doc } from '@firebase/firestore'
+import {auth,db} from '../FirebaseConfig'
 import { useRouter } from 'vue-router'
+
+    const posts = ref()
+    const postList =<any>[];
+
+     const fetchFirebase=async()=>{
+      const postRef=collection(db,"post");
+      const fetchFirebase=async()=>{
+      const postRef=collection(db,"post");
+      // const querySnapshot =getDocs(query(postRef,where("postid","==",(useRoute().params.posts))
+      // ).then(snapshot => {
+      //   snapshot.forEach(doc => {
+      //     console.log(`${doc.id}: ${doc.data().userName}`);
+      //   })
+      // }))
+      }}
 
 const user = auth.currentUser
 const router = useRouter()
@@ -75,7 +91,11 @@ const apply = async () => {
         console.log(error);
     }
 }
+
+
+
 </script>
+
 
 <style>
 .title{

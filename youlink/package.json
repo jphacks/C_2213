@@ -13,7 +13,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "firebase": "^9.12.1",
+    "@vue/cli": "^5.0.8",
+    "@vuepic/vue-datepicker": "^3.5.2",
+    "firebase": "^9.11.0",
     "firebase-admin": "^11.1.0",
     "pinia": "^2.0.21",
     "vue": "^3.2.38",
@@ -37,6 +39,8 @@
     "jsdom": "^20.0.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.1.0",
     "start-server-and-test": "^1.14.0",
     "typescript": "~4.7.4",
     "vite": "^3.0.9",

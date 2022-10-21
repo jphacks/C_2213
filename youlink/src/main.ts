@@ -11,11 +11,15 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import './assets/main.css'
 
+import Datepicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+
 const app = createApp(App)
 const vuetify = createVuetify({ components, directives }); 
 
 app.use(createPinia())
   .use(router)
+app.component('Datepicker', Datepicker);
   .use(vuetify)
   .mount('#app')
 
