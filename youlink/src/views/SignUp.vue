@@ -11,7 +11,7 @@ let user_password = ref('')
 let user_repassword = ref('')
 let error_message = ref('')
 const router = useRouter()
-const default_icon = 'gs://youlink-bf71e.appspot.com/aaa'
+const default_icon = 'https://firebasestorage.googleapis.com/v0/b/youlink-bf71e.appspot.com/o/user_default_icon.png?alt=media&token=39be9a7b-26b9-43d4-a145-d6fbe4bba4ea'
 
 const setUserDefault = async (user) => {
     const user_data = {
