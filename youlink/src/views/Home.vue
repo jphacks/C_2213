@@ -46,7 +46,7 @@ export default ({
     const router = useRouter()
     const posts = ref()
     const postList =<any>[];
-    let postItem = {title:ref()};
+    let postItem = ref({})
 
     const testFn = (param:any)=>{
       showContent.value= param
@@ -76,8 +76,14 @@ export default ({
     })
 
     const openModal=(post:any) => {
+      postItem.value = {
+        title: post.title,
+        key: post.key,
+        usename: post.username,
+        description: post.discription,
+      }
       showContent.value=true
-      postItem = post
+      console.log(post)
       console.log(postItem)
       console.log("押しました")
       console.log(showContent.value)
