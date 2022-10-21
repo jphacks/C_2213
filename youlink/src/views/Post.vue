@@ -83,16 +83,12 @@ export default defineComponent({
         const imageRef=ref(storage,'/'+ title.value);
         
       uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
-          //画像の取得
-          console.log(1)
-             getDownloadURL(snapshot.ref).then((url)=>{
-            console.log(2)
+            //画像の取得
+            getDownloadURL(snapshot.ref).then((url)=>{
             const usersRef =collection(db,"users")
             //usernameの取得
             getDocs(query(usersRef, where("id", "==", auth.currentUser?.uid))).then(snapshot => {
-              console.log(3)
             snapshot.forEach(doc => {
-              console.log(4)
               console.log(doc.data().icon);
               //firebaseに追加
               addDoc(collection(db, "post"), {
@@ -105,9 +101,7 @@ export default defineComponent({
                 postId:doc.id,
                 username:doc.data().username,
                 icon:doc.data().icon
-            })
-            console.log(5)
-
+              })
             })
             })
           })

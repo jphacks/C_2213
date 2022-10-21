@@ -59,7 +59,6 @@ export default ({
     
     //firebaseからpostを取得
     const fetchFirebase=async()=>{
-      const data:Array<any>=[]
       const querySnapshot = await getDocs(collection(getFirestore(),"post"))
       querySnapshot.forEach((doc)=>{
         postList.push({
