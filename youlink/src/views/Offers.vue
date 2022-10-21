@@ -40,20 +40,20 @@ import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where,se
 import {auth,db} from '../FirebaseConfig'
 import { useRouter } from 'vue-router'
 
-    const posts = ref()
-    const postList =<any>[];
+  const posts = ref()
+  const postList =<any>[];
 
-     const fetchFirebase=async()=>{
-      const postRef=collection(db,"post");
-      const fetchFirebase=async()=>{
-      const postRef=collection(db,"post");
-      // const querySnapshot =getDocs(query(postRef,where("postid","==",(useRoute().params.posts))
-      // ).then(snapshot => {
-      //   snapshot.forEach(doc => {
-      //     console.log(`${doc.id}: ${doc.data().userName}`);
-      //   })
-      // }))
-      }}
+    const fetchFirebase=async()=>{
+    const postRef=collection(db,"post");
+    const fetchFirebase=async()=>{
+    const postRef=collection(db,"post");
+    // const querySnapshot =getDocs(query(postRef,where("postid","==",(useRoute().params.posts))
+    // ).then(snapshot => {
+    //   snapshot.forEach(doc => {
+    //     console.log(`${doc.id}: ${doc.data().userName}`);
+    //   })
+    // }))
+    }}
 
 const user = auth.currentUser
 const router = useRouter()
@@ -92,10 +92,7 @@ const apply = async () => {
     }
 }
 
-
-
 </script>
-
 
 <style>
 .title{
