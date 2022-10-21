@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <div class="search">
-         <h1>ホーム画面</h1>
+  <div class="grid">
+    <Sidebar></Sidebar>
+    <div></div> 
+    <div class="home-container">
+      <div class="search">
         <input type="text" v-model="textInput">
         <p>{{showContent}}</p>
     </div>
@@ -21,11 +23,12 @@
       </div>
     </div>
     <HomeModal  :title="postItem.title" :docId="postItem.key" :username="postItem.usename" :description="postItem.description" :showContent="showContent" @emitTest="testFn"/>
-    
   </div>
+</div>
 </template>
 
 <script lang="ts">
+import Sidebar from '../components/Sidebar.vue'
 import HomeModal from '../components/HomeModal.vue'
 import { ref, onMounted } from 'vue'
 import { getUser } from '../stores/auth'
@@ -38,6 +41,7 @@ import { getFirestore, addDoc,collection,serverTimestamp, getDocs } from '@fireb
 export default ({
   components: {
     HomeModal,
+    Sidebar
   },
   setup() {
     //モーダルクリックチェック
@@ -102,19 +106,38 @@ export default ({
 });
 </script>
 
-<style>
-.search{
-    text-align: center;
+<style lang="scss">
+.grid {
+  display: grid;
+  grid-template-columns: 15% 85%;
 }
 
 .post{
   border: aqua solid 1px;
+}
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.search input{
+  width: 30rem;
+  height: 2rem;
+  margin: 2rem;
+  background: #F3F3F3;
+  box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+}
+
+.recruitment-list{
+  display: grid;
+  grid-template-columns: 30% 30% 30%;
 }
 .recruitment-bg{
-    border: solid 2px;
-    width:20%;
+    border-radius: 5px;
     margin:10px 10px 10px 10px;
+    box-shadow: 0 0 8px gray;
 }
 
 </style>

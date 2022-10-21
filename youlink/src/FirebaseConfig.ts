@@ -1,8 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore,addDoc,collection,serverTimestamp, getDocs } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth';
-import { getStorage } from "firebase/storage";
 
+import { getStorage, ref } from "firebase/storage"
 const config = {
     apiKey: import.meta.env.VITE_FB_APIKEY,
     authDomain: import.meta.env.VITE_FB_AUTHDOMAIN,
@@ -17,8 +17,13 @@ export const app = initializeApp(config)
 
 export const auth = getAuth(app);
 export const db = getFirestore(app)
-export const storage =getStorage(app)
 
+export const storage = getStorage(app)
 
-
-
+export const setImagePath = (path: string) => {
+    const gsReference = ref(
+        storage,
+        path
+      )
+    return gsReference
+}

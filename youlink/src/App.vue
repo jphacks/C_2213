@@ -1,27 +1,10 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import { logOut, getUser } from '../src/stores/auth'
-import { onAuthStateChanged } from "firebase/auth"
-import { auth } from '../src/FirebaseConfig' 
-import { ref } from 'vue'
+import {  RouterView } from 'vue-router'
 
-let username = ref('')
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    const uid = user.uid;
-    if (user.displayName)
-      username.value = user.displayName
-    else
-      username.value = "ゲスト"
-  }
-  else {
-    username.value = ''
-  }
-})
 </script>
 
 <template>
+<<<<<<< HEAD
     <div class="flexbox">
       <div class="sidebar">
         <RouterLink to="/">Home</RouterLink><br>
@@ -43,23 +26,50 @@ onAuthStateChanged(auth, (user) => {
         <p @click="getUser">getUser</p>
       </div>
     </div>
+=======
+  <div class="scene">
+    <RouterView /> 
+  </div>
+>>>>>>> bd7713f7f34c85aa83da0475806deeabca1f26ba
 </template>
 
-<style scoped>
-.flexbox{
-  display: flex;
-  width: 100%;
-  height: 100%;
-  float: left;
+<style scoped lang="scss">
+$mq-breakpoints: (
+    xl: 1440px,
+    lg: 1280px,
+    md: 1024px,
+    tb: 768px,
+    sm: 576px,
+    xs: 414px) !default;
+
+// Media Queryの設定
+@mixin media($breakpoint: md, $rule: min, $subtraction: false) {
+    $breakpoint: map_get($mq-breakpoints, $breakpoint);
+
+    @if $rule==max and $subtraction {
+        $breakpoint: $breakpoint - 0.0625;
+    }
+
+    @media screen and (#{$rule}-width: $breakpoint) {
+        @content;
+    }
 }
-.sidebar{
-  width:10%;
-  background-color: aqua;
-  height: 100%;
-  color: white;
-  float: left; 
-}
-.scene{
-  width:100%;
+
+body {
+  @include media(sm) {
+    font-size: 10px;
+  }
+
+  @include media(md) {
+    font-size: 12px;
+  }
+
+  @include media(lg) {
+    font-size: 14px;
+  }
+
+  @include media(xl) {
+    font-size: 16px;
+  }
 }
 </style>
