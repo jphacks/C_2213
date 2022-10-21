@@ -15,9 +15,10 @@ const router = useRouter()
 const default_icon = 'https://firebasestorage.googleapis.com/v0/b/youlink-bf71e.appspot.com/o/user_default_icon.png?alt=media&token=39be9a7b-26b9-43d4-a145-d6fbe4bba4ea'
 
 const setUserDefault = async (user:any) => {
+    console.log(user_name.value)
     const user_data = {
         id: user.uid,
-        username: user.displayName ? user.displayName : 'ゲスト',
+        username: user_name.value ? user_name.value : 'ゲスト',
         address: user.email ? user.email : '',
         describe: '',
         icon: default_icon,
@@ -34,7 +35,7 @@ const setUserDefault = async (user:any) => {
 }
 
 const successCreateUser = (user:any) => {
-    if (user.displayName) {
+    if (!user_name.value) {
         updateProfile(auth.currentUser, {
             displayName: "ゲスト"
         }).then(() => {

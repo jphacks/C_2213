@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { logOut } from '../stores/auth'
+</script>
+
 <template>
     <div class="sidebar">
         <div class="sidebar-top-element">
@@ -10,6 +14,7 @@
             <RouterLink to="/users">
                 <div class="sidebar-user-icon"><img src="../assets/computer_programming_man.png"></div>
             </RouterLink>
+            <button @click="logOut">ログアウト</button>
         </div>
     </div>
 </template>
