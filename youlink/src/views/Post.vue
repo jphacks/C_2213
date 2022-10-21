@@ -82,13 +82,17 @@ export default defineComponent({
         const storage =getStorage();
         const imageRef=ref(storage,'/'+ title.value);
         
-        uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
+      uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
           //画像の取得
-          getDownloadURL(snapshot.ref).then((url)=>{
+          console.log(1)
+             getDownloadURL(snapshot.ref).then((url)=>{
+            console.log(2)
             const usersRef =collection(db,"users")
             //usernameの取得
             getDocs(query(usersRef, where("id", "==", auth.currentUser?.uid))).then(snapshot => {
+              console.log(3)
             snapshot.forEach(doc => {
+              console.log(4)
               console.log(doc.data().icon);
               //firebaseに追加
               addDoc(collection(db, "post"), {
@@ -98,15 +102,16 @@ export default defineComponent({
                 filePath : url,
                 created_at: serverTimestamp(),
                 tag: tag.value,
-              // uid: auth.currentUser?.uid
+                postId:doc.id,
                 username:doc.data().username,
-                // icon:doc.data().icon
+                icon:doc.data().icon
             })
+            console.log(5)
 
             })
             })
           })
-        console.log("募集しました");
+        console.log(6)
       });
 
       } catch (e) {

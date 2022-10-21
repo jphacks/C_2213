@@ -13,7 +13,7 @@ let error_message = ref('')
 const router = useRouter()
 const default_icon = 'gs://youlink-bf71e.appspot.com/aaa'
 
-const setUserDefault = async (user) => {
+const setUserDefault = async (user:any) => {
     const user_data = {
         id: user.uid,
         username: user.displayName ? user.displayName : 'ゲスト',
@@ -31,7 +31,7 @@ const setUserDefault = async (user) => {
     await setDoc(doc(db, "users", user.uid), user_data);
 }
 
-const successCreateUser = (user) => {
+const successCreateUser = (user:any) => {
     if (user.displayName) {
         updateProfile(auth.currentUser, {
             displayName: "ゲスト"

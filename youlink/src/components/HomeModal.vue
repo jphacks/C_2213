@@ -32,7 +32,7 @@ export default defineComponent({
             type: String
         },
         docId:{
-            type: Number
+            type: String
         },
         showContent:{
             type: Boolean 

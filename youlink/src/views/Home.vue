@@ -13,14 +13,14 @@
     <div class="post" v-for="post in posts" :key="post" >
       <div  >
         <div class="bl_article" >
-          <p @click="openModal(post)">タイトル：{{ post.data.title }}</p>
+          <p @click="openModal(post.data)">タイトル：{{ post.data.title }}</p>
            画像:<img :src=post.filePath>
         </div>
         <!-- <div v-if="showContent==true"> -->
-          <HomeModal  :title="post.data.title" :docId="post.key" :username="post.data.usename" :description="post.data.description" :showContent="showContent" @emitTest="testFn"/>
         <!-- </div> -->
       </div>
     </div>
+    <HomeModal  :title="postItem.title" :docId="postItem.key" :username="postItem.usename" :description="postItem.description" :showContent="showContent" @emitTest="testFn"/>
     
   </div>
 </template>
@@ -46,8 +46,7 @@ export default ({
     const router = useRouter()
     const posts = ref()
     const postList =<any>[];
-    const msg = ref('Hello TypeScript');
-    let postItem = ref()
+    let postItem = {title:ref()};
 
     const testFn = (param:any)=>{
       showContent.value= param
@@ -77,10 +76,9 @@ export default ({
     })
 
     const openModal=(post:any) => {
-      console.log(post)
       showContent.value=true
       postItem = post
-      console.log(post.data.title)
+      console.log(postItem)
       console.log("押しました")
       console.log(showContent.value)
     };
@@ -93,7 +91,7 @@ export default ({
       }
     })
 
-    return {  msg,fetchFirebase,textInput,showContent,posts,openModal,postItem,testFn };
+    return {  fetchFirebase,textInput,showContent,posts,openModal,postItem,testFn };
   },
 });
 </script>
