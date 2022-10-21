@@ -1,50 +1,60 @@
 <template>
   <div class="title">
     <h1>メッセージ画面</h1>
-    
+    <div class="post" v-for="message in messages" :key="message" >
+      <div  >
+        <div class="bl_article" @click="moveDirectMessage( message.key)">
+          <p >タイトル：{{ message.key }}</p>
+        </div>
+        <!-- <div v-if="showContent==true"> -->
+        <!-- </div> -->
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent,ref,onMounted } from 'vue'
 import {useRouter} from 'vue-router'
-import { getFirestore, addDoc,collection,serverTimestamp, getDocs } from '@firebase/firestore'
-
+import { getFirestore, addDoc,collection,serverTimestamp, getDocs,where,query } from '@firebase/firestore'
+import {auth,db} from '../FirebaseConfig'
 
 export default defineComponent({
     setup() {
-        const posts = ref()
-        const postList =<any>[];
+        const messages = ref()
+        const messageList =<any>[];
         const router = useRouter()
 
-        const moveDirectMessage = ()=> {
-            router.push('/directmessage')
-            
+        const moveDirectMessage = (roomId:string)=> {
+            router.push('/directmessage/'+ roomId)
         }
 
         const fetchFirebase=async()=>{
-            const data:Array<any>=[]
-            const querySnapshot = await getDocs(collection(getFirestore(),"post"))
+            const userid =auth.currentUser!.uid
+            const usersCollectionRef=collection(db,"users",userid,"room")
+            const querySnapshot = await getDocs(usersCollectionRef)
             querySnapshot.forEach((doc)=>{
-                postList.push({
+                messageList.push({
                     key: doc.id,
                     data:doc.data(),
                 })
             })
-            console.log(postList)
-            return postList
+        
+            console.log(messageList)
+            return messageList
         }
 
         //postsにfirebaseから募集一覧を格納
         onMounted(()=>{
             fetchFirebase().then((data)=>{
-                posts.value =data
-                console.log(posts.value)
+                messages.value =data
+                console.log(messages.value)
              })
         }) 
 
         return {
-            moveDirectMessage
+            moveDirectMessage,fetchFirebase,messageList,messages
         }
     },
 })

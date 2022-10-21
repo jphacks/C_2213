@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, } from 'vue'
 import { createPinia } from 'pinia'
 
 import App from './App.vue'
@@ -20,7 +20,7 @@ const vuetify = createVuetify({ components, directives });
 app.use(createPinia())
   .use(router)
 app.component('Datepicker', Datepicker);
-  .use(vuetify)
+  app.use(vuetify)
   .mount('#app')
 
 
