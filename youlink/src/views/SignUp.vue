@@ -1,16 +1,50 @@
 <script setup lang="ts">
 import { logOut } from '../stores/auth'
 import { ref } from 'vue'
-import { auth } from "../FirebaseConfig"
+import { auth, db } from "../FirebaseConfig"
 import { GoogleAuthProvider, TwitterAuthProvider, GithubAuthProvider, signInWithPopup, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { useRouter } from 'vue-router'
+import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
 
 let user_email = ref('')
 let user_password = ref('')
 let user_repassword = ref('')
 let error_message = ref('')
 const router = useRouter()
+const default_icon = 'gs://youlink-bf71e.appspot.com/aaa'
 
+const setUserDefault = async (user) => {
+    const user_data = {
+        id: user.uid,
+        username: user.displayName ? user.displayName : 'ゲスト',
+        address: user.email ? user.email : '',
+        describe: '',
+        icon: default_icon,
+        twitter_url: '',
+        github_url: '',
+        achievements: {},
+        Is_public: false,
+        created_at: serverTimestamp(),
+        update_at: serverTimestamp()
+    }
+
+    await setDoc(doc(db, "users", user.uid), user_data);
+}
+
+const successCreateUser = (user) => {
+    if (user.displayName) {
+        updateProfile(auth.currentUser, {
+            displayName: "ゲスト"
+        }).then(() => {
+
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
+    setUserDefault(user)
+    router.push('/')
+}
 const userSignUp = async (user_email: string, user_password: string) => {
     if (!user_email) {
         error_message.value = 'メールアドレスを入力してください'
@@ -32,16 +66,7 @@ const userSignUp = async (user_email: string, user_password: string) => {
         console.log("signup")
         const user = userCredential.user;
 
-        updateProfile(auth.currentUser, {
-        displayName: "ゲスト"
-        }).then(() => {
-        // Profile updated!
-        // ...
-        }).catch((error) => {
-        // An error occurred
-        // ...
-        });
-        router.push('/')
+        successCreateUser(user)
     })
     .catch((error) => {
         const error_code = error.code;
@@ -66,9 +91,8 @@ const googleSignUp = () => {
     .then((result) => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const user = result.user;
-        console.log(user)
         
-        router.push('/')
+        successCreateUser(user)
     }).catch((error) => {
         console.log(error)
     })
@@ -80,7 +104,8 @@ const githubSignUp = () => {
     .then((result) => {
         const credential = GithubAuthProvider.credentialFromResult(result);
         const user = result.user;
-        router.push('/')
+        
+        successCreateUser(user)
     }).catch((error) => {
         console.log(error)
     })
@@ -90,11 +115,9 @@ const twitterSignUp = () => {
     const provider = new TwitterAuthProvider()
     signInWithPopup(auth, provider)
     .then((result) => {
-    //   const credential = TwitterAuthProvider.credentialFromResult(result);
-    //   const token = credential.accessToken;
-    //   const secret = credential.secret;
         const user = result.user;
-        router.push('/')
+        
+        successCreateUser(user)
     }).catch((error) => {
         console.log(error)
     });  
