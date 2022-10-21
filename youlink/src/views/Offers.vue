@@ -29,10 +29,12 @@
 <script lang="ts">
 import {ref,onMounted,computed} from 'vue'
 import { useRoute } from 'vue-router'
-import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where, Timestamp } from '@firebase/firestore'
+import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where, Timestamp,doc } from '@firebase/firestore'
 import {auth,db} from '../FirebaseConfig'
 import Datepicker from '@vuepic/vue-datepicker';
 import Sidebar from '../components/Sidebar.vue'
+
+const route = useRoute()
 
 export default ({
   setup() {
@@ -40,12 +42,13 @@ export default ({
     const posts = ref()
     const postList =<any>[];
     const date = ref(new Date());
-    const timestamp = {seconds: 1618730280, nanoseconds: 0}
+    const 
+    const timestamp =  doc(db, "post",route.params.posts);
+    const timestampSnap = getDocs(timestamp);
 
     const allowedDates = computed(() => {
       return [
-        new Date(),
-        new Date(new Date().setDate(new Date().getDate() + 1))
+        .createdAt.toDate()
       ];
     });
     const alertFn = () => {

@@ -34,7 +34,7 @@ import { ref, onMounted } from 'vue'
 import { getUser } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from "firebase/auth"
-import { auth } from '../FirebaseConfig'
+import { auth, db } from '../FirebaseConfig'
 import { getFirestore, addDoc,collection,serverTimestamp, getDocs } from '@firebase/firestore'
 
 
@@ -60,7 +60,7 @@ export default ({
     //firebaseからpostを取得
     const fetchFirebase=async()=>{
       const data:Array<any>=[]
-      const querySnapshot = await getDocs(collection(getFirestore(),"post"))
+      const querySnapshot = await getDocs(collection(db,"post"))
       querySnapshot.forEach((doc)=>{
         postList.push({
           key: doc.id,

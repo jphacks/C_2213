@@ -79,7 +79,8 @@ export default defineComponent({
     //   const docRef =collection(db,"users",`${auth.currentUser?.uid}`)
     //     console.log(user)
     // }
-
+    const newDoc = doc(collection(db, "post")).id;
+    const addNewdoc = doc(db, "post",newDoc);
     //投稿時の発火
     const create=()=>{
       try {
@@ -100,14 +101,15 @@ export default defineComponent({
               console.log(4)
               console.log(doc.data().icon);
               //firebaseに追加
-              addDoc(collection(db, "post"), {
+              setDoc(addNewdoc, {
                 title: title.value,
                 schedule: date1.value,
                 description: describe.value,
                 filePath : url,
                 created_at: serverTimestamp(),
                 tag: tag.value,
-                postId:doc.id,
+                postId: newDoc,
+                userId: doc.id,
                 username:doc.data().username,
                 icon:doc.data().icon
             })
