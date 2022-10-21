@@ -25,16 +25,34 @@
 </template>
 
 <script lang="ts">
-import {ref} from 'vue'
+import {ref,onMounted} from 'vue'
+import { useRoute } from 'vue-router'
+import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where } from '@firebase/firestore'
+import {auth,db} from '../FirebaseConfig'
+
 export default ({
   setup() {
     const message=ref('')
+    const posts = ref()
+    const postList =<any>[];
 
-    return { message };
-  },
-});
+    const fetchFirebase=async()=>{
+      const postRef=collection(db,"post");
+      const fetchFirebase=async()=>{
+      const postRef=collection(db,"post");
+      // const querySnapshot =getDocs(query(postRef,where("postid","==",(useRoute().params.posts))
+      // ).then(snapshot => {
+      //   snapshot.forEach(doc => {
+      //     console.log(`${doc.id}: ${doc.data().userName}`);
+      //   })
+      // }))
+      }}
 
+    return { message }
+    }
+})
 </script>
+
 <style>
 .title{
     text-align: center;

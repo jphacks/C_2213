@@ -3,30 +3,36 @@
     <div class="search">
          <h1>ホーム画面</h1>
         <input type="text" v-model="textInput">
-        {{textInput}}
+        <p>{{showContent}}</p>
     </div>
-    <div class="recruitment-list" >
+    <!-- <div class="recruitment-list" >
         <div class="recruitment-bg" @click="openModal">
             <h1 class="recruitment-title">JPHACKS登壇者語りませんか？</h1>
         </div>
-    </div>
-    <HomeModal v-if="showContent"/>
-    <!-- <div v-if="showContent">
-        <h1>JPHACKS登壇者語りませんか？</h1>
-        <p>初めまして。名城大学のせーと申します。今年度のJPHACKSに参加しましたが、他のグループのエンジニアの方とお話しする機会がなかったので、
-YOULINKで募集させていただきました。</p>
-        <button @click="moveOffer">話したい</button>
     </div> -->
+    <div class="post" v-for="post in posts" :key="post" >
+      <div  >
+        <div class="bl_article" >
+          <p @click="openModal(post.data)">タイトル：{{ post.data.title }}</p>
+           画像:<img :src=post.filePath>
+        </div>
+        <!-- <div v-if="showContent==true"> -->
+        <!-- </div> -->
+      </div>
+    </div>
+    <HomeModal  :title="postItem.title" :docId="postItem.key" :username="postItem.usename" :description="postItem.description" :showContent="showContent" @emitTest="testFn"/>
+    
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import HomeModal from '../components/HomeModal.vue'
 import { ref, onMounted } from 'vue'
 import { getUser } from '../stores/auth'
 import { useRouter } from 'vue-router'
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from '../FirebaseConfig'
+import { getFirestore, addDoc,collection,serverTimestamp, getDocs } from '@firebase/firestore'
 
 
 export default ({
@@ -35,9 +41,47 @@ export default ({
   },
   setup() {
     //モーダルクリックチェック
-    let showContent = ref(false);
+    const showContent = ref<boolean>(false);
     const textInput = ref('');
     const router = useRouter()
+    const posts = ref()
+    const postList =<any>[];
+    let postItem = {title:ref()};
+
+    const testFn = (param:any)=>{
+      showContent.value= param
+      console.log(showContent.value)
+    } 
+    
+    //firebaseからpostを取得
+    const fetchFirebase=async()=>{
+      const data:Array<any>=[]
+      const querySnapshot = await getDocs(collection(getFirestore(),"post"))
+      querySnapshot.forEach((doc)=>{
+        postList.push({
+          key: doc.id,
+          data:doc.data(),
+        })
+      })
+      console.log(postList)
+      return postList
+    }
+
+    //postsにfirebaseから募集一覧を格納
+    onMounted(()=>{
+      fetchFirebase().then((data)=>{
+        posts.value =data
+        console.log(posts.value)
+      })
+    })
+
+    const openModal=(post:any) => {
+      showContent.value=true
+      postItem = post
+      console.log(postItem)
+      console.log("押しました")
+      console.log(showContent.value)
+    };
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -46,12 +90,8 @@ export default ({
         router.push('/top')
       }
     })
-    
-    let openModal = () => {
-      showContent.value = true;
-    };
 
-    return { textInput,showContent, openModal };
+    return {  fetchFirebase,textInput,showContent,posts,openModal,postItem,testFn };
   },
 });
 </script>
@@ -61,7 +101,8 @@ export default ({
     text-align: center;
 }
 
-.recruitment-list{
+.post{
+  border: aqua solid 1px;
 
 }
 .recruitment-bg{

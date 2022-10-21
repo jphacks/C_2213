@@ -34,7 +34,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/offers',
+      path: '/offers/:post_id',
       name: 'offers',
       component: OffersView
     },

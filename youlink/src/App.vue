@@ -42,9 +42,7 @@ onAuthStateChanged(auth, (user) => {
         <RouterLink to="/signup"><p>SignUp</p></RouterLink>
         <p @click="getUser">getUser</p>
       </div>
-
     </div>
-    
 </template>
 
 <style scoped>
@@ -64,4 +62,4 @@ onAuthStateChanged(auth, (user) => {
 .scene{
   width:100%;
 }
-</style>>
+</style>
