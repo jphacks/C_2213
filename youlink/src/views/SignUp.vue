@@ -17,7 +17,7 @@ const default_icon = 'https://firebasestorage.googleapis.com/v0/b/youlink-bf71e.
 const setUserDefault = async (user:any) => {
     const user_data = {
         id: user.uid,
-        username: user.displayName ? user.displayName : 'ゲスト',
+        username: user_name ? user_name : 'ゲスト',
         address: user.email ? user.email : '',
         describe: '',
         icon: default_icon,
@@ -34,7 +34,7 @@ const setUserDefault = async (user:any) => {
 }
 
 const successCreateUser = (user:any) => {
-    if (user.displayName) {
+    if (!user_name) {
         updateProfile(auth.currentUser, {
             displayName: "ゲスト"
         }).then(() => {

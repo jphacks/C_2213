@@ -68,6 +68,7 @@ export default ({
         })
       })
       console.log(postList)
+      console.log(typeof postList[0].data.schedule[0].seconds)
       return postList
     }
 

@@ -1,5 +1,6 @@
 <template>
   <div class="title">
+    <Sidebar></Sidebar>
     <h1>新規募集画面</h1>
     <div>
       タイトル<input type="text" v-model="title"><br/>
@@ -8,11 +9,11 @@
       タグ<input type="text" v-model="tag"><br/>
     </div>
     <div>
-      <Datepicker v-model="date1" range />
-      <Datepicker v-model="date2" range />
-      <Datepicker v-model="date3" range />
-      <Datepicker v-model="date4" range />
-      <Datepicker v-model="date5" range />
+      <Datepicker v-model="date1" range maxRange="1"/>
+      <Datepicker v-model="date2" range maxRange="1"/>
+      <Datepicker v-model="date3" range maxRange="1"/>
+      <Datepicker v-model="date4" range maxRange="1"/>
+      <Datepicker v-model="date5" range maxRange="1"/>
     </div>
     <div>
       画像<input type="file" accept="image/jpeg,image/png,image/gif" @change="uploadFile"> <br/>
@@ -33,24 +34,28 @@ import { getFirestore,addDoc,collection,serverTimestamp, getDocs,setDoc,doc ,que
 import { getDownloadURL, ref ,getStorage, uploadBytesResumable } from "firebase/storage";
 import {db,auth}from '../FirebaseConfig'
 import {getUser} from '../stores/auth'
+import Sidebar from '../components/Sidebar.vue'
 
 export default defineComponent({
+  components: {
+    Sidebar
+  },
   setup(){
     const title = vueRef<string>()
     const tag = vueRef<string>()
-    const date1 = vueRef<any>()
-    const date2 = vueRef<any>()
-    const date3 = vueRef<any>()
-    const date4 = vueRef<any>()
-    const date5 = vueRef<any>()
+    const date1 = vueRef<Date>()
+    const date2 = vueRef<Date>()
+    const date3 = vueRef<Date>()
+    const date4 = vueRef<Date>()
+    const date5 = vueRef<Date>()
     const describe = vueRef<string>()
     const fileData =vueRef<any>()
     const postList =<any>[];
     
     onMounted(() => {
             const startDate = new Date();
-            const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
-            date1.value = [startDate, endDate];
+            // const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+            date1.value = [startDate];
     })
 
     const uploadFile = (event:any)=>{
