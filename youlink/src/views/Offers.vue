@@ -45,7 +45,7 @@ const router = useRouter()
 const message = ref('')
 
 const apply = async () => {
-  console.log("応募しました");
+  // console.log("応募しました");
   try {
     const newDoc = doc(collection(db, "rooms")).id;
     await setDoc(doc(db, "rooms", newDoc), {
