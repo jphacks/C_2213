@@ -7,7 +7,7 @@ YOULINKで募集させていただきました。</p>
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import {useRouter} from 'vue-router'
 export default {
     setup(){
