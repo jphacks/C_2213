@@ -5,19 +5,8 @@ import { storage, setImagePath } from '../FirebaseConfig'
 import { ref } from 'vue'
 
 
-let user_icon = ref('')
+let user_icon = 'https://firebasestorage.googleapis.com/v0/b/youlink-bf71e.appspot.com/o/user_default_icon.png?alt=media&token=39be9a7b-26b9-43d4-a145-d6fbe4bba4ea'
 
-const getUserIcon = async () => {
-  getDownloadURL(setImagePath('gs://youlink-bf71e.appspot.com/default_icon.png'))
-  .then(url => {
-    console.log(url)
-    user_icon.value = url
-    console.log(user_icon)
-  })
-  .catch(err => console.log(err))
-}
-
-getUserIcon()
 </script>
 <template>
   <div class="notification-scene">
@@ -25,7 +14,7 @@ getUserIcon()
     <div class="notification-box-container">
       <p>{{user_icon}}</p>
       <div class="notification-box">
-        <div class="notification-box-elements notification-box-left"><img src="require(user_icon)"></div>
+        <div class="notification-box-elements notification-box-left"><img src="require({{user_icon}})"></div>
         <div></div>
         <div class="notification-box-elements notification-box-right">〇〇さんから、話したいと応募がきました</div>
       </div>

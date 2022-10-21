@@ -4,33 +4,9 @@ import {  RouterView } from 'vue-router'
 </script>
 
 <template>
-<<<<<<< HEAD
-    <div class="flexbox">
-      <div class="sidebar">
-        <RouterLink to="/">Home</RouterLink><br>
-        <RouterLink to="/messages">Messages</RouterLink><br>
-        <RouterLink to="/notification">Notification</RouterLink><br>
-        <RouterLink to="/post">Post</RouterLink><br>
-        <RouterLink to="/users">Users</RouterLink><br>
-      </div>
-      <div class="scene">
-        <RouterView /> 
-      </div>
-      <div v-if="username">
-        <p @click="logOut">LogOut</p>
-        <p>{{ username }}</p>
-      </div>
-      <div v-else>
-        <RouterLink to="/signin"><p>SignIn</p></RouterLink>
-        <RouterLink to="/signup"><p>SignUp</p></RouterLink>
-        <p @click="getUser">getUser</p>
-      </div>
-    </div>
-=======
   <div class="scene">
     <RouterView /> 
   </div>
->>>>>>> bd7713f7f34c85aa83da0475806deeabca1f26ba
 </template>
 
 <style scoped lang="scss">
