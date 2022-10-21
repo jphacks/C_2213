@@ -19,8 +19,7 @@ const vuetify = createVuetify({ components, directives });
 
 app.use(createPinia())
   .use(router)
-app.component('Datepicker', Datepicker);
   .use(vuetify)
   .mount('#app')
 
-
+app.component('Datepicker', Datepicker)
