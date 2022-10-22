@@ -2,6 +2,7 @@ import { signOut } from "firebase/auth"
 import { auth } from "../FirebaseConfig"
 
 
+
 export const logOut = () =>
     signOut(auth).then(() => {
         console.log("Successfully LogOut")
@@ -17,6 +18,8 @@ export const getUser = () => {
         return user
     } else {
         console.log("Not Login")
-        return
+        return 'Not Login'
     }
 }
+
+

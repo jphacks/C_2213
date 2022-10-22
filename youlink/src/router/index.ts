@@ -34,7 +34,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/offers',
+      path: '/offers/:post_id',
       name: 'offers',
       component: OffersView
     },
@@ -54,12 +54,12 @@ const router = createRouter({
       component: PostView
     },
     {
-      path: '/users',
+      path: '/users/:id',
       name: 'users',
       component: UsersView
     },
     {
-      path: '/directmessage',
+      path: '/directmessage/:id',
       name: 'directmessage',
       component: DirectMessageView
     },

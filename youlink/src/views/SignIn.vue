@@ -84,13 +84,57 @@ const twitterSignIn = () => {
 </script>
 
 <template>
-    <div>
-        <input type="email" v-model="user_email">
-        <input type="text" v-model="user_password">
-        <p>{{ error_message }}</p>
-        <button @click="userSignIn(user_email, user_password)">サインイン</button>
-        <button @click="googleSignIn">googleログイン</button>
-        <button @click="githubSignIn">githubログイン</button>
-        <button @click="twitterSignIn">twitterログイン</button>
+    <div class="frame-border">
+        <h2 id="signin-title">おかえりなさい</h2>
+        <div class="main-container">
+            <div class="input-form">
+                <div class="label-container">
+                    <label for="input-email">メールアドレス</label>
+                    <label for="input-password">パスワード</label>
+                </div>
+                <div class="signin-input-container input-container">
+                    <input id="input-email" class="signup-inputbox" type="email" v-model="user_email">
+                    <input id="input-password" class="signup-inputbox" type="text" v-model="user_password">
+                </div>
+            </div> 
+            <p class="error-msg">{{ error_message }}</p>
+            <button class="signin-btn" @click="userSignIn(user_email, user_password)">サインイン</button>
+
+            <div class="oauth-container">
+                <button @click="googleSignIn">googleログイン</button>
+                <button @click="githubSignIn">githubログイン</button>
+                <button @click="twitterSignIn">twitterログイン</button>
+            </div>
+        </div>  
     </div>
 </template>
+
+<style lang="scss">
+    $main-color: #2FDCE7;
+
+    #signin-title {
+        display: flex;
+        justify-content: center;
+        font-size: 2.5rem;
+        font-weight: 400;
+        color: #FFFFFF;
+    }
+
+    .signin-input-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .signin-input-container input {
+        margin-bottom: 1rem;
+    }
+
+    .signin-btn {
+        color: #FFFFFF;
+        background-color: $main-color;
+        border: $main-color 2px solid;
+        width: 15rem;
+        border-radius: 5px;
+        font-size: 1.5rem;
+    }
+</style>
