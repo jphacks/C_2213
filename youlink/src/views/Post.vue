@@ -1,5 +1,6 @@
 <template>
   <div class="title">
+    <Sidebar/>
     <h1>新規募集画面</h1>
     <div>
       タイトル<input type="text" v-model="title"><br/>
@@ -33,8 +34,12 @@ import { getFirestore,addDoc,collection,serverTimestamp, getDocs,setDoc,doc ,que
 import { getDownloadURL, ref ,getStorage, uploadBytesResumable } from "firebase/storage";
 import {db,auth}from '../FirebaseConfig'
 import {getUser} from '../stores/auth'
+import Sidebar from "../components/Sidebar.vue"
 
 export default defineComponent({
+  components:{
+    Sidebar
+  },
   setup(){
     const title = vueRef<string>()
     const tag = vueRef<string>()
@@ -102,6 +107,7 @@ export default defineComponent({
                 username:doc.data().username,
                 icon:doc.data().icon
               })
+
             })
             })
           })

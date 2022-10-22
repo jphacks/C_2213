@@ -1,6 +1,7 @@
 <template>
     <v-app>
         <v-main app v-if="user !== false">
+            <Sidebar/>
             <v-container>
                 <Chat v-if="user" />
                 <div v-else>
@@ -22,6 +23,7 @@ import { ref } from "vue";
 import  Chat  from "../components/Chat.vue";
 import  Form  from "../components/Form.vue";
 import { getUser } from "../stores/auth";
+import Sidebar from "../components/Sidebar.vue"
 
 const user = ref(getUser());
 
