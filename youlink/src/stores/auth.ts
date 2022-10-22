@@ -18,7 +18,7 @@ export const getUser = () => {
         return user
     } else {
         console.log("Not Login")
-        return
+        return 'Not Login'
     }
 }
 
