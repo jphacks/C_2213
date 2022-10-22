@@ -12,14 +12,13 @@ let user_icon = 'https://firebasestorage.googleapis.com/v0/b/youlink-bf71e.appsp
   <div class="notification-scene">
     <Sidebar></Sidebar>
     <div class="notification-box-container">
-      <p>{{user_icon}}</p>
       <div class="notification-box">
-        <div class="notification-box-elements notification-box-left"><img src="require({{user_icon}})"></div>
+        <div class="notification-box-elements notification-box-left"><img :src="`${user_icon}`"></div>
         <div></div>
         <div class="notification-box-elements notification-box-right">〇〇さんから、話したいと応募がきました</div>
       </div>
       <div class="notification-box">
-        <div class="notification-box-elements notification-box-left">icon</div>
+        <div class="notification-box-elements notification-box-left"><img :src="`${user_icon}`"></div>
         <div></div>
         <div class="notification-box-elements notification-box-right">〇〇さんから、話したいと応募がきました</div>
       </div>
@@ -49,7 +48,7 @@ let user_icon = 'https://firebasestorage.googleapis.com/v0/b/youlink-bf71e.appsp
   border-radius: 15px;
   margin-top: 1rem;
   padding: 10px;
-  height: 2rem;
+  height: 100%;
   width: 40rem;
 }
 
@@ -57,5 +56,9 @@ let user_icon = 'https://firebasestorage.googleapis.com/v0/b/youlink-bf71e.appsp
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.notification-box-left img {
+  width: 100%;
 }
 </style>
