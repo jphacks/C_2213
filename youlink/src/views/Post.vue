@@ -52,6 +52,7 @@ import { getDownloadURL, ref ,getStorage, uploadBytesResumable } from "firebase/
 import {db,auth}from '../FirebaseConfig'
 import {getUser} from '../stores/auth'
 import Sidebar from '../components/Sidebar.vue'
+import {useRouter} from 'vue-router'
 
 export default defineComponent({
   components: {
@@ -68,6 +69,7 @@ export default defineComponent({
     const describe = vueRef<string>()
     const fileData =vueRef<any>()
     const postList =<any>[];
+    const router = useRouter()
     
     onMounted(() => {
             const startDate = new Date();
@@ -111,7 +113,6 @@ export default defineComponent({
             //usernameの取得
             getDocs(query(usersRef, where("id", "==", auth.currentUser?.uid))).then(snapshot => {
             snapshot.forEach(doc => {
-              console.log(doc.data().icon);
               //firebaseに追加
               addDoc(collection(db, "post"), {
                 title: title.value,
@@ -124,12 +125,13 @@ export default defineComponent({
                 username:doc.data().username,
                 icon:doc.data().icon
               })
+
             })
             })
           })
-        console.log(6)
+        
       });
-
+      router.push('/')
       } catch (e) {
         console.error("Error adding document: ", e);
       }
