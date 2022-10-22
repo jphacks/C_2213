@@ -110,7 +110,6 @@ export default defineComponent({
       uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
             //画像の取得
             getDownloadURL(snapshot.ref).then(async(url)=>{
-            const usersRef =collection(db,"users")
             const uid = auth.currentUser?.uid
 
             const docRef = doc(db, 'users', uid)
@@ -127,11 +126,11 @@ export default defineComponent({
               icon:docSnap.data()?.icon
             }
             console.log(set_data)
-            addDoc(collection(db, "post"), set_data)
+            await addDoc(collection(db, "post"), set_data).then(router.push('/'))
           })
         
       });
-      router.push('/')
+      
       } catch (e) {
         console.error("Error adding document: ", e);
       }

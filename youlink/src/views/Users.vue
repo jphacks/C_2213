@@ -10,21 +10,21 @@
             <div>
                 <div v-if="user">
 		            
-		            <div class="center"><img :src="`${userInfo[0].icon}`" width="100"></div>
+		            <div class="center"><img :src="`${user_data.icon}`" width="100"></div>
                 		
-                	<p class="center f48">{{userInfo[0].username}}</p>
-		            <p class="center f24">{{userInfo[0].describe}}</p>
+                	<p class="center f48">{{user_data.username}}</p>
+		            <p class="center f24">{{user_data.describe}}</p>
 		            
 		            <div class="img_list">
-		            	<div><a :href="`${userInfo[0].twitter_url}`" target="_blank" v-if="userInfo[0].twitter_url !== ''">
+		            	<div><a :href="`${user_data.twitter_url}`" target="_blank" v-if="user_data.twitter_url !== ''">
 		            	<img src="../assets/TwitterIcon.png" alt="" class="logo"></a>
 		            	</div>
 		            	
-		            	<div><a :href="`${userInfo[0].github_url}`" target="_blank" v-if="userInfo[0].github_url !== ''">
+		            	<div><a :href="`${user_data.github_url}`" target="_blank" v-if="user_data.github_url !== ''">
 		            	<img src="../assets/GithubIcon.png" alt="" class="logo"></a>
 		            	</div>
 		            
-		            	<div><a :href="`${userInfo[0].qiita_url}`" target="_blank" v-if="userInfo[0].qiita_url !== ''">
+		            	<div><a :href="`${user_data.qiita_url}`" target="_blank" v-if="user_data.qiita_url !== ''">
 		            	<img src="../assets/QiitaIcon.png" alt="" class="logo"></a>
 		            	</div>
 	            	</div>
@@ -47,7 +47,7 @@
 <script setup >
 	import { ref, watch, watchEffect } from "vue";
 	import { auth, db } from "../FirebaseConfig";
-	import { collection, query, onSnapshot, where } from "firebase/firestore";
+	import { collection, query, onSnapshot, where, doc, getDoc } from "firebase/firestore";
 	
 	//const logo_github = require('@/assets/GithubIcon.png');
 	//const logo_github = "./assets/GithubIcon.png";
@@ -55,6 +55,10 @@
 	
 	
 	const user = ref(auth.currentUser);
+	let user_data = ref()
+	const get_child = (e) => {
+		user_data.value = e
+	}
 	//console.log(user)
 	//console.log(user?.uid)
 	console.log(user?._rawValue?.uid)
@@ -64,33 +68,45 @@
 	const userInfo = ref([]);
 	const chatsRef = ref(null);
 	
-	
-	const q = query(collection(db, "users"), where("id", "==", user?._rawValue?.uid));
-	const unsubscribe = onSnapshot(q, (snapshot) => {
-		//console.log(snapshot);
-	    snapshot.docChanges().forEach((change) => {
-	            
-	            //console.log("Message: ", change.doc.id, change.doc.data());
-	            
-	            userInfo.value.push({
-	                id: change.doc.id,
-	                ...change.doc.data(),
-	            });
-	            
-	            //console.log("userInfo", userInfo);
+	// const getUserData = async () => {
+	// 	const uid = auth.currentUser?.uid
+	// 	console.log(uid)
 
-	            setTimeout(() => {
-	                if (chatsRef.value !== null) {
-	                    console.log(chatsRef.value.scrollHeight);
-	                    window.scrollTo(0, chatsRef.value.scrollHeight);
-	                }
-	            }, 60);
+	// const docRef = doc(db, 'users', uid)
+	// const docSnap = await getDoc(docRef)
+	// user_data = docSnap.data()
+	
+	// console.log(docSnap.data())
+	// }
+	// getUserData()
+
+
+	// const q = query(collection(db, "users"), where("id", "==", user?._rawValue?.uid));
+	// const unsubscribe = onSnapshot(q, (snapshot) => {
+	// 	//console.log(snapshot);
+	//     snapshot.docChanges().forEach((change) => {
+	            
+	//             //console.log("Message: ", change.doc.id, change.doc.data());
+	            
+	//             userInfo.value.push({
+	//                 id: change.doc.id,
+	//                 ...change.doc.data(),
+	//             });
+	            
+	//             //console.log("userInfo", userInfo);
+
+	//             setTimeout(() => {
+	//                 if (chatsRef.value !== null) {
+	//                     console.log(chatsRef.value.scrollHeight);
+	//                     window.scrollTo(0, chatsRef.value.scrollHeight);
+	//                 }
+	//             }, 60);
 	        
-	    });
+	//     });
 	    
-	    //console.log(unsubscribe);
+	//     //console.log(unsubscribe);
 	    
-	});
+	// });
 	
 </script>
 

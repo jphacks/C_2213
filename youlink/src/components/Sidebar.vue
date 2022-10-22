@@ -1,14 +1,29 @@
 <script setup lang="ts">
-import { auth } from '@/FirebaseConfig';
+import { auth, db } from '@/FirebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
 import { useRouter } from 'vue-router';
 import { logOut } from '../stores/auth'
 
 
 
 const router = useRouter()
+
+const getUserData = async () => {
+    const uid = auth.currentUser?.uid
+    console.log(uid)
+
+	const docRef = doc(db, 'users', uid)
+	const docSnap = await getDoc(docRef)
+	const user_data = docSnap.data()
+    return user_data
+}
+	
+    
 const toUserScene = () => {
     const uid = auth.currentUser?.uid
     const url = '/users/' + uid
+    const emit = defineEmits<Emit>()
+    emit(getUserData)
     router.push(url)
 }
 </script>
