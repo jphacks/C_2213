@@ -1,35 +1,39 @@
 <template>
-  <div >
-    <div class="title">
-     <h1>JPHACKS登壇者語りませんか？</h1>
-    </div>
-    <div class="offer-inputarea">
-      <div class="offer-inputarea-left">
-        <div class="offer-inputarea-left-date">
-          日程:
+  <div class="offer-scene">
+    <Sidebar></Sidebar>
+    <div class="offer-main">
+      <div class="offer-title">
+        <h1>JPHACKS登壇者語りませんか？</h1>
+      </div>
+      <div class="offer-inputarea">
+        <div class="offer-element offer-inputarea-left">
+          <div class="offer-inputarea-left-date">
+            <p class="offer-title">日程</p>
+          </div>
+          <Datepicker range />
+          <!-- <div class="offer-inputarea-left-date">
+            <p class="offer-title"></p>
+          </div> -->
         </div>
-        <div class="offer-inputarea-left-date">
-          時刻:
+
+        <div class="offer-element offer-inputarea-right">
+          <p class="offer-title">ひとこと</p>
+          <hr>
+          <v-text-field
+              class="offer-description"
+              color="#2FDCE7"
+              variant="outlined"
+              hide-details
+              append-icon="mdi-send"
+              @click:append="apply"
+              v-model="message"
+          >
+          </v-text-field>
         </div>
       </div>
-
-      <div class="offer-inputarea-right">
-        <p>ひとこと</p>
-        <hr>
-        <v-text-field
-            color="#2FDCE7"
-            variant="outlined"
-            hide-details
-            append-icon="mdi-send"
-            @click:append="apply"
-            v-model="message"
-        >
-        </v-text-field>
-      </div>
+      <button class="offer-btn" @click="apply">応募</button>
+      <!-- <v-btn class="offer-btn" variant="outlined" @click="apply" >応募</v-btn> -->
     </div>
-    <v-btn variant="outlined" @click="apply" >応募</v-btn>
-
-
   </div>
 </template>
 
@@ -39,6 +43,7 @@ import { useRoute  } from 'vue-router'
 import { getFirestore, addDoc,collection,serverTimestamp, getDocs,query,where,setDoc, doc } from '@firebase/firestore'
 import {auth,db} from '../FirebaseConfig'
 import { useRouter } from 'vue-router'
+import Sidebar from '../components/Sidebar.vue'
 
   const posts = ref()
   const postList =<any>[];
@@ -96,11 +101,64 @@ const apply = async () => {
 
 </script>
 
-<style>
+<style lang="scss">
+$main-color: #2FDCE7;
+
+.offer-scene {
+  background-color: #F2F2F2;
+  height: 100vh;
+}
+
+.offer-main {
+  position: relative;
+  left: 10%;
+}
+
 .title{
     text-align: center;
 }
-.offer-input-area{
+.offer-inputarea{
   display: flex;
+  flex-direction: row;
+  width: 100%;
+  position: relative;
+  top: 5rem;
+}
+
+.offer-element {
+  width: 40%;
+}
+
+.offer-element {
+  background-color: #FFFFFF;
+  margin: 2rem;
+  border-radius: 7px;
+  height: 20rem;
+}
+
+.offer-title {
+  color: $main-color;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.offer-btn {
+  width: 15rem;
+  height: 3rem;
+  background-color: $main-color;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 5px;
+  position: fixed;
+  bottom: 10%;
+  left: 47%;
+}
+
+.offer-description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
