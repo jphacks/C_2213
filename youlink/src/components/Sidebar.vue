@@ -11,7 +11,7 @@ import { logOut } from '../stores/auth'
             <RouterLink to="/post"><img src="../assets/post_icon.png"></RouterLink>
         </div>
         <div class="sidebar-bottom-element">
-            <RouterLink to="/users">
+            <RouterLink to="/users/IIlyt2uElncShCVq8EYK8tqxNq33">
                 <div class="sidebar-user-icon"><img src="../assets/computer_programming_man.png"></div>
             </RouterLink>
             <!-- <button @click="logOut">ログアウト</button> -->
