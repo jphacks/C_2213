@@ -16,6 +16,7 @@
     "@vue/cli": "^5.0.8",
     "@vuepic/vue-datepicker": "^3.5.2",
     "esbuild": "^0.15.12",
+    "dotenv": "^16.0.3",
     "firebase": "^9.11.0",
     "firebase-admin": "^11.1.0",
     "pinia": "^2.0.21",
