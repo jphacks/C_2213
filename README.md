@@ -1,5 +1,9 @@
 # YOULINK〜偶然の出会いから、深い繋がりへ〜
 
+## **デモ動画**
+[動画](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0b328908-73f1-4575-a862-afa7b7[…]hrome%25202022-10-22%252013-02-54.mp4%22&x-id=GetObject)
+## **製品リンク**
+[製品](https://youlink-bf71e.web.app/)
 ## **製品概要**
 
 ### **背景(製品開発のきっかけ、課題等）**
