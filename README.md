@@ -1,7 +1,7 @@
 # YOULINK〜偶然の出会いから、深い繋がりへ〜
 
 ## **デモ動画**
-[動画](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/0b328908-73f1-4575-a862-afa7b7a7b308/JPHACKS2022_%E9%96%8B%E7%99%BA%E9%83%A8%E5%B1%8B_-_reBako.io%EF%BC%88%E3%83%AA%E3%83%90%E3%82%B3%EF%BC%89_-_Google_Chrome_2022-10-22_13-02-54.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221022%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221022T040750Z&X-Amz-Expires=86400&X-Amz-Signature=029bea4960bf34acbe353e538f7de621f23f5f9af89380f82bbda2f18bf31b7e&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22JPHACKS2022_%25E9%2596%258B%25E7%2599%25BA%25E9%2583%25A8%25E5%25B1%258B%2520-%2520reBako.io%25EF%25BC%2588%25E3%2583%25AA%25E3%2583%2590%25E3%2582%25B3%25EF%25BC%2589%2520-%2520Google%2520Chrome%25202022-10-22%252013-02-54.mp4%22&x-id=GetObject)
+[動画](https://drive.google.com/file/d/1tSaUzjPVItdGH6IjisTCcyE-lfJPOVUU/view?usp=sharing)
 ## **製品概要**
 
 ### **背景(製品開発のきっかけ、課題等）**
