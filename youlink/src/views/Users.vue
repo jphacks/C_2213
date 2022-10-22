@@ -2,28 +2,32 @@
     <div>
         <!-- header -->
         <div class="title">
-            <h1>ユーザー画面</h1>
+            
         </div>
         
         <!-- body -->
-        <div v-if="user !== undefined">
+        <div v-if="user !== undefined" class="main">
             <div>
                 <div v-if="user">
-		            <img :src="`${userInfo[0].icon}`">
-                	
-                	<h2>{{userInfo[0].username}}</h2>
-		            <h3>{{userInfo[0].describe}}</h3>
 		            
-		            <a :href="`${userInfo[0].twitter_url}`" target="_blank" v-if="userInfo[0].twitter_url !== ''">
-		            	<img src="../assets/TwitterIcon.png" alt=""></a>
+		            <div class="center"><img :src="`${userInfo[0].icon}`" width="100"></div>
+                		
+                	<p class="center f48">{{userInfo[0].username}}</p>
+		            <p class="center f24">{{userInfo[0].describe}}</p>
 		            
-		            <a :href="`${userInfo[0].github_url}`" target="_blank" v-if="userInfo[0].github_url !== ''">
-		            	<img src="../assets/GithubIcon.png" alt=""></a>
+		            <div class="img_list">
+		            	<div><a :href="`${userInfo[0].twitter_url}`" target="_blank" v-if="userInfo[0].twitter_url !== ''">
+		            	<img src="../assets/TwitterIcon.png" alt="" class="logo"></a>
+		            	</div>
+		            	
+		            	<div><a :href="`${userInfo[0].github_url}`" target="_blank" v-if="userInfo[0].github_url !== ''">
+		            	<img src="../assets/GithubIcon.png" alt="" class="logo"></a>
+		            	</div>
 		            
-		            <a :href="`${userInfo[0].qiita_url}`" target="_blank" v-if="userInfo[0].qiita_url !== ''">
-		            	<img src="../assets/QiitaIcon.png" alt=""></a>
-		            
-	            
+		            	<div><a :href="`${userInfo[0].qiita_url}`" target="_blank" v-if="userInfo[0].qiita_url !== ''">
+		            	<img src="../assets/QiitaIcon.png" alt="" class="logo"></a>
+		            	</div>
+	            	</div>
 	            </div>
 	            
                 <div v-else>
@@ -46,8 +50,8 @@
 	import { collection, query, onSnapshot, where } from "firebase/firestore";
 	
 	//const logo_github = require('@/assets/GithubIcon.png');
-	const logo_github = "./assets/GithubIcon.png";
-	console.log(logo_github)
+	//const logo_github = "./assets/GithubIcon.png";
+	//console.log(logo_github)
 	
 	
 	const user = ref(auth.currentUser);
@@ -95,5 +99,20 @@
 .title{
 	text-align: center;
 }
-
+.img_list{
+    display:flex;
+    justify-content: center;
+}
+.logo{
+	width:40px;
+}
+.center{
+	text-align: center;
+}
+.f48{
+	font-size:32px;
+}
+.f24{
+	font-size:16px;
+}
 </style>
