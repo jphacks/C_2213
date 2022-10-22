@@ -11,9 +11,10 @@
                 <div v-if="user"
                 v-for="item in userInfo"
 	            >
-                	id:{{item.id}},name:{{item.name}}
-		            <br>
-		            <br>
+                	id:{{item.id}}
+		            <br>address:{{item.address}}
+		            <br>name:{{item.username}}
+		            
 	            </div>
 	            
                 <div v-else>
@@ -36,17 +37,20 @@
 	import { collection, query, onSnapshot, where } from "firebase/firestore";
 
 	const user = ref(auth.currentUser);
-	//console.log(user["_rawValue"]["uid"])
-	const uid = user["_rawValue"]["uid"];
+	//console.log(user)
+	//console.log(user?.uid)
+	console.log(user?._rawValue?.uid)
+	
+	//const uid = user["_rawValue"]["uid"];
 	
 	const userInfo = ref([]);
 	const chatsRef = ref(null);
 	
 	
-	const q = query(collection(db, "users"), where("id", "==", `${uid}`));
+	const q = query(collection(db, "users"), where("id", "==", user?._rawValue?.uid));
 	const unsubscribe = onSnapshot(q, (snapshot) => {
+		//console.log(snapshot);
 	    snapshot.docChanges().forEach((change) => {
-	        if (change.type === "added") {
 	            
 	            //console.log("Message: ", change.doc.id, change.doc.data());
 	            
@@ -63,8 +67,11 @@
 	                    window.scrollTo(0, chatsRef.value.scrollHeight);
 	                }
 	            }, 60);
-	        }
+	        
 	    });
+	    
+	    console.log(unsubscribe);
+	    
 	});
 	
 </script>
