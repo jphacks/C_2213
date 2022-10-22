@@ -8,13 +8,22 @@
         <!-- body -->
         <div v-if="user !== undefined">
             <div>
-                <div v-if="user"
-                v-for="item in userInfo"
-	            >
-                	id:{{item.id}}
-		            <br>address:{{item.address}}
-		            <br>name:{{item.username}}
+                <div v-if="user">
+		            <img :src="`${userInfo[0].icon}`">
+                	
+                	<h2>{{userInfo[0].username}}</h2>
+		            <h3>{{userInfo[0].describe}}</h3>
 		            
+		            <a :href="`${userInfo[0].twitter_url}`" target="_blank" v-if="userInfo[0].twitter_url !== ''">
+		            	<img src="../assets/TwitterIcon.png" alt=""></a>
+		            
+		            <a :href="`${userInfo[0].github_url}`" target="_blank" v-if="userInfo[0].github_url !== ''">
+		            	<img src="../assets/GithubIcon.png" alt=""></a>
+		            
+		            <a :href="`${userInfo[0].qiita_url}`" target="_blank" v-if="userInfo[0].qiita_url !== ''">
+		            	<img src="../assets/QiitaIcon.png" alt=""></a>
+		            
+	            
 	            </div>
 	            
                 <div v-else>
@@ -35,7 +44,12 @@
 	import { ref, watch, watchEffect } from "vue";
 	import { auth, db } from "../FirebaseConfig";
 	import { collection, query, onSnapshot, where } from "firebase/firestore";
-
+	
+	//const logo_github = require('@/assets/GithubIcon.png');
+	const logo_github = "./assets/GithubIcon.png";
+	console.log(logo_github)
+	
+	
 	const user = ref(auth.currentUser);
 	//console.log(user)
 	//console.log(user?.uid)
@@ -59,7 +73,7 @@
 	                ...change.doc.data(),
 	            });
 	            
-	            console.log("userInfo", userInfo);
+	            //console.log("userInfo", userInfo);
 
 	            setTimeout(() => {
 	                if (chatsRef.value !== null) {
@@ -70,7 +84,7 @@
 	        
 	    });
 	    
-	    console.log(unsubscribe);
+	    //console.log(unsubscribe);
 	    
 	});
 	
@@ -81,4 +95,5 @@
 .title{
 	text-align: center;
 }
+
 </style>
