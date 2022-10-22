@@ -3,25 +3,21 @@
     <Sidebar></Sidebar>
     <div></div> 
     <div class="home-container">
-      <div class="search">
+      <!-- <div class="search">
         <input type="text" v-model="textInput">
-        <p>{{showContent}}</p>
-    </div>
-    <!-- <div class="recruitment-list" >
-        <div class="recruitment-bg" @click="openModal">
-            <h1 class="recruitment-title">JPHACKS登壇者語りませんか？</h1>
+      </div> -->
+      <div class="recruitment-list" >
+        <div class="post recruitment-bg" v-for="post in posts" :key="post" >
+          <div  >
+            <div class="bl_article recruitment-title" style="background-image: {{post.data.filePath}}">
+              <p @click="openModal(post.data)">タイトル：{{ post.data.title }}</p>
+              <!-- 画像:<img :src=post.data.filePath> -->
+            </div>
+          </div>
         </div>
-    </div> -->
-    <div class="post" v-for="post in posts" :key="post" >
-      <div  >
-        <div class="bl_article" >
-          <p @click="openModal(post.data)">タイトル：{{ post.data.title }}</p>
-           画像:<img :src=post.filePath>
-        </div>
-        <!-- <div v-if="showContent==true"> -->
-        <!-- </div> -->
-      </div>
     </div>
+
+
     <HomeModal  :title="postItem.title" :docId="postItem.key" :username="postItem.usename" :description="postItem.description" :showContent="showContent" @emitTest="testFn"/>
   </div>
 </div>
@@ -133,11 +129,22 @@ export default ({
 .recruitment-list{
   display: grid;
   grid-template-columns: 30% 30% 30%;
+  position: relative;
+  top: 10%;
 }
 .recruitment-bg{
     border-radius: 5px;
-    margin:10px 10px 10px 10px;
+    margin: 1.3rem;
     box-shadow: 0 0 8px gray;
+    height: 10rem;
+    width: 14rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
-
+.recruitment-bg img {
+  width: 100%;
+  height: 100%;
+}
 </style>
