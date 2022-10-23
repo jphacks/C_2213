@@ -36,6 +36,7 @@
           <div>
             <button class="post-add-btn" @click="create">登録</button>
           </div>
+          {{message}}
         </div>
 
       </div>
@@ -47,7 +48,7 @@
 
 <script lang="ts">
 import {defineComponent,ref as vueRef,onMounted} from 'vue'
-import { getFirestore,addDoc,collection,serverTimestamp, getDocs,setDoc,doc ,query,where} from 'firebase/firestore'
+import { getFirestore,addDoc,collection,serverTimestamp, getDocs,setDoc,doc ,query,where, getDoc} from 'firebase/firestore'
 import { getDownloadURL, ref ,getStorage, uploadBytesResumable } from "firebase/storage";
 import {db,auth}from '../FirebaseConfig'
 import {getUser} from '../stores/auth'
@@ -60,6 +61,7 @@ export default defineComponent({
   },
   setup(){
     const title = vueRef<string>()
+    let message = vueRef<string>()
     const tag = vueRef<string>()
     const date1 = vueRef<any>()
     const date2 = vueRef<any>()
@@ -81,57 +83,54 @@ export default defineComponent({
       fileData.value = event.target.files[0]
     }
 
-    // const getUserName=()=>{
-    //   const uid= auth.currentUser?.uid
-    //   const data:Array<any>=[]
-    //   const querySnapshot = getDocs(collection(getFirestore(), 'users'));
-    //   querySnapshot.forEach((doc:any)=>{
-    //     postList.push({
-    //       key: doc.id,
-    //       data:doc.data(),
-    //     })
-    //   })
-    //   console.log(querySnapshot)
-    // }
-
-    // const getUserName=async()=>{
-    //   const docRef =collection(db,"users",`${auth.currentUser?.uid}`)
-    //     console.log(user)
-    // }
-
     //投稿時の発火
     const create=()=>{
+      if (!title.value) {
+        message.value = 'タイトルを入力してください'
+        return
+      }
+
+      if (!describe.value) {
+        describe.value = 'よろしくお願いします！'
+      }
+
+      if (!date1.value) {
+        message.value = '日時を一つは入力してください'
+        return
+      }
+
       try {
         const metadata={ contentType: 'image/jpeg',}
         const storage =getStorage();
         const imageRef=ref(storage,'/'+ title.value);
+        console.log(imageRef)
+
+
         
       uploadBytesResumable(imageRef, fileData.value, metadata).then((snapshot)=>{
             //画像の取得
-            getDownloadURL(snapshot.ref).then((url)=>{
-            const usersRef =collection(db,"users")
-            //usernameの取得
-            getDocs(query(usersRef, where("id", "==", auth.currentUser?.uid))).then(snapshot => {
-            snapshot.forEach(doc => {
-              //firebaseに追加
-              addDoc(collection(db, "post"), {
-                title: title.value,
-                schedule: date1.value,
-                description: describe.value,
-                filePath : url,
-                created_at: serverTimestamp(),
-                tag: tag.value,
-                postId:doc.id,
-                username:doc.data().username,
-                icon:doc.data().icon
-              })
+            getDownloadURL(snapshot.ref).then(async(url)=>{
+            const uid = auth.currentUser?.uid
 
-            })
-            })
+            const docRef = doc(db, 'users', uid)
+            const docSnap = await getDoc(docRef)
+            const set_data = {
+              title: title.value,
+              schedule: date1.value,
+              description: describe.value,
+              filePath : url,
+              created_at: serverTimestamp(),
+              tag: tag.value ? tag.value : '',
+              postId:docSnap.data()?.id,
+              username:docSnap.data()?.username,
+              icon:docSnap.data()?.icon
+            }
+            console.log(set_data)
+            await addDoc(collection(db, "post"), set_data).then(router.push('/'))
           })
         
       });
-      router.push('/')
+      
       } catch (e) {
         console.error("Error adding document: ", e);
       }
@@ -139,6 +138,7 @@ export default defineComponent({
     return{
     create,
     title,
+    message,
     tag,
     date1,
     date2,

@@ -1,5 +1,31 @@
 <script setup lang="ts">
+import { auth, db } from '@/FirebaseConfig';
+import { doc, getDoc } from 'firebase/firestore';
+import { useRouter } from 'vue-router';
 import { logOut } from '../stores/auth'
+
+
+
+const router = useRouter()
+
+const getUserData = async () => {
+    const uid = auth.currentUser?.uid
+    console.log(uid)
+
+	const docRef = doc(db, 'users', uid)
+	const docSnap = await getDoc(docRef)
+	const user_data = docSnap.data()
+    return user_data
+}
+	
+    
+const toUserScene = () => {
+    const uid = auth.currentUser?.uid
+    const url = '/users/' + uid
+    const emit = defineEmits<Emit>()
+    emit(getUserData)
+    router.push(url)
+}
 </script>
 
 <template>
@@ -11,9 +37,12 @@ import { logOut } from '../stores/auth'
             <RouterLink to="/post"><img src="../assets/post_icon.png"></RouterLink>
         </div>
         <div class="sidebar-bottom-element">
-            <RouterLink to="/users/IIlyt2uElncShCVq8EYK8tqxNq33">
-                <div class="sidebar-user-icon"><img src="../assets/computer_programming_man.png"></div>
-            </RouterLink>
+            <!-- <RouterLink v-bind:to="{
+                name: 'users',
+                params: {id: uid}
+            }"> -->
+            <div class="sidebar-user-icon" @click="toUserScene"><img src="../assets/computer_programming_man.png"></div>
+            <!-- </RouterLink> -->
             <!-- <button @click="logOut">ログアウト</button> -->
         </div>
     </div>
